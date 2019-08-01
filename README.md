@@ -16,7 +16,7 @@ cd linux-4.19.63
 
 cp /boot/config* .config
 
-yum install gcc bison flex bc elfutils-libelf-devel openssl-devel
+yum install gcc bison flex bc elfutils-libelf-devel openssl-devel perl
 
 make oldconfig
 
