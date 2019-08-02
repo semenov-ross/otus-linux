@@ -22,6 +22,8 @@ make oldconfig
 
 make
 
+mkdir /lib/modules/4.19.63
+
 make install
 
 make modules_install
