@@ -1,4 +1,3 @@
 # Файловые системы и LVM
-su -
 
-yum -y install xfsdump.x86_64
+base_lvm.md - выполнения основной части работы
