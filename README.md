@@ -6,3 +6,5 @@
 Дисковая подсистема  
 ## 03homework
 Файловые системы и LVM  
+## 04homework
+Bash, awk, sed, grep и другие  
