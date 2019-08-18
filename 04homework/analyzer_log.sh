@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #=========================================================#
-BIN_FOLDER=/home/ross/OTUS/exp4
+BIN_FOLDER=/home/vagrant/scr
 LOCKFILE=$BIN_FOLDER/analyzer.lock
 LOGFILE=access.log
 CHECK_LINE=$BIN_FOLDER/cur_line
