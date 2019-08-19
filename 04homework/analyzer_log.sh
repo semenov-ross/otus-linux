@@ -116,4 +116,5 @@ result=$(
 
 echo -e "$report" | mail -s "Analyzing log of [ $DATE_BEGIN - $DATE_END ]" root
 
+
 rm $LOCKFILE
