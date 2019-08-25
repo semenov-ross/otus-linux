@@ -1,2 +1,1 @@
-0 * * * *	/home/vagrant/scr/analyzer_log.sh 2>/dev/null
-
+0 * * * *	/home/vagrant/scr/analyzer_log.sh 8 8 2>/dev/null

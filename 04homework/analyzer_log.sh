@@ -114,7 +114,7 @@ result=$(
 	sort_arr COUNT_CODES
 )
 
-echo -e "$report" | mail -s "Analyzing log of [ $DATE_BEGIN - $DATE_END ]" root
+echo -e "$result" | mail -s "Analyzing log of [ $DATE_BEGIN - $DATE_END ]" root
 
 
 rm $LOCKFILE
