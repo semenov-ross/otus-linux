@@ -13,10 +13,10 @@
   * Собираем RPM:  
     rpmbuild -ba ~/rpmbuild/SPECS/proc-analyze.spec  
 
-  * Проверяем что пакет создался:
+  * Проверяем что пакет создался:  
     ls -l rpmbuild/RPMS/noarch/  
 
-  * Создаём свое репозиторий:
+  * Создаём свой репозиторий:  
     mkdir localrepo  
     cp rpmbuild/RPMS/noarch/proc-analyze-0-1.el7.noarch.rpm localrepo/  
     createrepo localrepo/  
@@ -31,8 +31,8 @@
 
     yum repolist  
 
-  * Устанвливаем пакет:
+  * Устанвливаем пакет:  
     sudo yum install proc-analyze -y  
 
-  * Проверям работу:
+  * Проверям работу:  
     pars_proc_psax.sh
