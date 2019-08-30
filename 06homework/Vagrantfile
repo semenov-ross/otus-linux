@@ -10,27 +10,37 @@ MACHINES = {
 }
 
 Vagrant.configure("2") do |config|
+    MACHINES.each do |boxname, boxconfig|
+	config.vm.define boxname do |box|
 
-  MACHINES.each do |boxname, boxconfig|
+	box.vm.box = boxconfig[:box_name]
+	box.vm.host_name = boxname.to_s
 
-      config.vm.define boxname do |box|
+	box.vm.network "private_network", ip: boxconfig[:ip_addr]
 
-          box.vm.box = boxconfig[:box_name]
-          box.vm.host_name = boxname.to_s
+	box.vm.provider :virtualbox do |vb|
+	    vb.customize ["modifyvm", :id, "--memory", "1024"]
+	end
 
-          box.vm.network "private_network", ip: boxconfig[:ip_addr]
-
-          box.vm.provider :virtualbox do |vb|
-            vb.customize ["modifyvm", :id, "--memory", "1024"]
-          end
-
-          box.vm.provision :shell do |s|
-             s.inline = 'mkdir -p ~root/.ssh;
-             cp ~vagrant/.ssh/auth* ~root/.ssh;
-             yum install -y rpm-build createrepo'
-          end
-
-      end
+	box.vm.provision "file", source: "proc-analyze.spec", destination: "~vagrant/proc-analyze.spec"
+	box.vm.provision "shell", inline: <<-SHELL
+	    mkdir -p ~root/.ssh; cp ~vagrant/.ssh/auth* ~root/.ssh
+	    yum install -y rpm-build createrepo
+	    mkdir -p ~root/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+	    mkdir ~root/localrepo
+	    cp ~vagrant/proc-analyze.spec ~root/rpmbuild/SPECS/
+	    rpmbuild -ba ~root/rpmbuild/SPECS/proc-analyze.spec
+	    cp ~root/rpmbuild/RPMS/noarch/proc-analyze-0-1.el7.noarch.rpm ~root/localrepo/
+	    createrepo ~root/localrepo/
+	    cat <<-'EOF' > /etc/yum.repos.d/ross.repo
+[ross]
+name=ross-nix
+baseurl=file:///root/localrepo
+gpgcheck=0
+enabled=1
+EOF
+	    yum list proc-analyze
+	SHELL
+    end
   end
 end
-
