@@ -41,7 +41,7 @@
 
 [typescript](typescript) - Процесс переименования vg и lv  
 
-После загузки получим:  
+После загрузки получим:  
 
      [root@lvm ~]# vgs
      VG     #PV #LV #SN Attr   VSize   VFree
