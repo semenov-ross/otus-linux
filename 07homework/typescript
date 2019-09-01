@@ -1,0 +1,363 @@
+Script started on Sun 01 Sep 2019 12:59:05 PM UTC
+]0;root@lvm:~[?1034h[root@lvm ~]# vgs
+  VG         #PV #LV #SN Attr   VSize   VFree
+  VolGroup00   1   2   0 wz--n- <38.97g    0 
+]0;root@lvm:~[root@lvm ~]# lvs
+  LV       VG         Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  LogVol00 VolGroup00 -wi-ao---- <37.47g                                                    
+  LogVol01 VolGroup00 -wi-ao----   1.50g                                                    
+]0;root@lvm:~[root@lvm ~]# vgrename VolGroup00 VGroot
+  Volume group "VolGroup00" successfully renamed to "VGroot"
+]0;root@lvm:~[root@lvm ~]# lvrename [K[K[K[K[K[K[K[K[Kvgs
+  VG     #PV #LV #SN Attr   VSize   VFree
+  VGroot   1   2   0 wz--n- <38.97g    0 
+]0;root@lvm:~[root@lvm ~]# lvrename VGroot LogVol00 LVroot
+  Renamed "LogVol00" to "LVroot" in volume group "VGroot"
+]0;root@lvm:~[root@lvm ~]# lvrename VGroot LogVol00 LVroot[1P LVroot1 LVroot[C[C[C[C[C[C[C[K[K[K[Kswap
+  Renamed "LogVol01" to "LVswap" in volume group "VGroot"
+]0;root@lvm:~[root@lvm ~]# lsblk 
+NAME              MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                 8:0    0   40G  0 disk 
+├─sda1              8:1    0    1M  0 part 
+├─sda2              8:2    0    1G  0 part /boot
+└─sda3              8:3    0   39G  0 part 
+  ├─VGroot-LVroot 253:0    0 37.5G  0 lvm  /
+  └─VGroot-LVswap 253:1    0  1.5G  0 lvm  [SWAP]
+sdb                 8:16   0   10G  0 disk 
+]0;root@lvm:~[root@lvm ~]# vi /etc/fstab 
+[?1049h[?1h=[1;33r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[33;1H"/etc/fstab" 11L, 481C[2;1H#
+# /etc/fstab
+# Created by anaconda on Sat May 12 18:50:26 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VolGroup00-LogVol00 /[23Cxfs     defaults[8C0 0
+UUID=570897ca-e759-4c81-90cf-389da6eee4cc /boot[19Cxfs     defaults[8C0 0
+/dev/mapper/VolGroup00-LogVol01 swap[20Cswap    defaults[8C0 0
+[94m~                                                                                                                                     [13;1H~                                                                                                                                     [14;1H~                                                                                                                                     [15;1H~                                                                                                                                     [16;1H~                                                                                                                                     [17;1H~                                                                                                                                     [18;1H~                                                                                                                                     [19;1H~                                                                                                                                     [20;1H~                                                                                                                                     [21;1H~                                                                                                                                     [22;1H~                                                                                                                                     [23;1H~                                                                                                                                     [24;1H~                                                                                                                                     [25;1H~                                                                                                                                     [26;1H~                                                                                                                                     [27;1H~                                                                                                                                     [28;1H~                                                                                                                                     [29;1H~                                                                                                                                     [30;1H~                                                                                                                                     [31;1H~                                                                                                                                     [32;1H~                                                                                                                                     [1;1H[?12l[?25h
+
+
+
+
+
+
+
+
+
+[m/[10;2HU[9;3H[8;1H
+/d[?25l[33;1H[1m-- INSERT --[m[33;14H[K[9;3H[?12l[?25hev/mapper/Vol[?25lGroup00-LogVol00 / [22Cxfs     defaults [7C0 0[9;83H[K[9;15H[?12l[?25h[?25lGroup00-LogVol00 / [22Cxfs     defaults [7C0 0[9;82H[K[9;14H[?12l[?25hGroup00[?25l-LogVol00 / [22Cxfs     defaults [7C0 0[9;81H[K[9;20H[?12l[?25h[?25l-LogVol00 / [22Cxfs     defaults [7C0 0[9;80H[K[9;19H[?12l[?25h[?25l-LogVol00 / [22Cxfs     defaults [7C0 0[9;79H[K[9;18H[?12l[?25h[?25l-LogVol00 / [22Cxfs     defaults [7C0 0[9;78H[K[9;17H[?12l[?25h[?25lo-LogVol00 /[22C xfs     defaults[7C 0 0[9;18H[?12l[?25h[?25lt-LogVol00 /[22C xfs     defaults[7C 0 0[9;19H[?12l[?25h-Log[?25lVol00 / [22Cxfs     defaults [7C0 0[9;79H[K[9;22H[?12l[?25h[?25lVol00 / [22Cxfs     defaults [7C0 0[9;78H[K[9;21H[?12l[?25hVol00[?25l / [22Cxfs     defaults [7C0 0[9;77H[K[9;25H[?12l[?25h[?25l / [22Cxfs     defaults [7C0 0[9;76H[K[9;24H[?12l[?25h[?25l / [22Cxfs     defaults [7C0 0[9;75H[K[9;23H[?12l[?25h[?25l / [22Cxfs     defaults [7C0 0[9;74H[K[9;22H[?12l[?25h[?25lr /[22C xfs     defaults[7C 0 0[9;23H[?12l[?25h[?25lo /[22C xfs     defaults[7C 0 0[9;24H[?12l[?25h[?25lo /[22C xfs     defaults[7C 0 0[9;25H[?12l[?25h[?25lt /[22C xfs     defaults[7C 0 0[9;26H[?12l[?25h[10;26H[11;26H[?25l-LogVol01 swap [19Cswap    defaults [7C0 0[11;83H[K[11;22H[?12l[?25h[?25l-LogVol01 swap [19Cswap    defaults [7C0 0[11;82H[K[11;21H[?12l[?25h[?25l-LogVol01 swap [19Cswap    defaults [7C0 0[11;81H[K[11;20H[?12l[?25h[?25l-LogVol01 swap [19Cswap    defaults [7C0 0[11;80H[K[11;19H[?12l[?25h[?25lo-LogVol01 swap[19C swap    defaults[7C 0 0[11;20H[?12l[?25h[?25lt-LogVol01 swap[19C swap    defaults[7C 0 0[11;21H[?12l[?25h[?25lGroot-LogVol01 swap [19Cswap    defaults [7C0 0[11;81H[K[11;15H[?12l[?25h[?25lGroot-LogVol01 swap [19Cswap    defaults [7C0 0[11;80H[K[11;14H[?12l[?25hGroot-Log[?25lVol01 swap [19Cswap    defaults [7C0 0[11;79H[K[11;22H[?12l[?25h[?25lVol01 swap [19Cswap    defaults [7C0 0[11;78H[K[11;21H[?12l[?25hVol01[?25l swap [19Cswap    defaults [7C0 0[11;77H[K[11;25H[?12l[?25h[?25l swap [19Cswap    defaults [7C0 0[11;76H[K[11;24H[?12l[?25h[?25l swap [19Cswap    defaults [7C0 0[11;75H[K[11;23H[?12l[?25h[?25l swap [19Cswap    defaults [7C0 0[11;74H[K[11;22H[?12l[?25h[?25ls swap[19C swap    defaults[7C 0 0[11;23H[?12l[?25h[?25lw swap[19C swap    defaults[7C 0 0[11;24H[?12l[?25h[?25la swap[19C swap    defaults[7C 0 0[11;25H[?12l[?25h[?25lp swap[19C swap    defaults[7C 0 0[11;26H[?12l[?25h[33;1H[K[11;25H[?25l[?12l[?25h[?25l[33;1H:[?12l[?25hwq[?25l"/etc/fstab" 11L, 469C written
+[?1l>[?12l[?25h[?1049l]0;root@lvm:~[root@lvm ~]# cat /etc/fstab 
+
+#
+# /etc/fstab
+# Created by anaconda on Sat May 12 18:50:26 2018
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/VGroot-LVroot /                       xfs     defaults        0 0
+UUID=570897ca-e759-4c81-90cf-389da6eee4cc /boot                   xfs     defaults        0 0
+/dev/mapper/VGroot-LVswap swap                    swap    defaults        0 0
+]0;root@lvm:~[root@lvm ~]# vi /etc/default/grub 
+[?1049h[?1h=[1;33r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[33;1H"/etc/default/grub" 7L, 388C[1;1HGRUB_TIMEOUT=1
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.ll[7;1Hvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"
+GRUB_DISABLE_RECOVERY="true"
+[94m~                                                                                                                                     [10;1H~                                                                                                                                     [11;1H~                                                                                                                                     [12;1H~                                                                                                                                     [13;1H~                                                                                                                                     [14;1H~                                                                                                                                     [15;1H~                                                                                                                                     [16;1H~                                                                                                                                     [17;1H~                                                                                                                                     [18;1H~                                                                                                                                     [19;1H~                                                                                                                                     [20;1H~                                                                                                                                     [21;1H~                                                                                                                                     [22;1H~                                                                                                                                     [23;1H~                                                                                                                                     [24;1H~                                                                                                                                     [25;1H~                                                                                                                                     [26;1H~                                                                                                                                     [27;1H~                                                                                                                                     [28;1H~                                                                                                                                     [29;1H~                                                                                                                                     [30;1H~                                                                                                                                     [31;1H~                                                                                                                                     [32;1H~                                                                                                                                     [1;1H[?12l[?25h
+
+
+
+
+
+
+[6;1H[mG
+
+G[6;2H[7;67H0/Log[?25l[33;1H[1m-- INSERT --[m[33;13H[K[7;19H[?12l[?25hog[?25lVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;67H[K[7;20H[?12l[?25h[?25lVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;66H[K[7;19H[?12l[?25hVol00[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;65H[K[7;23H[?12l[?25h[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;64H[K[7;22H[?12l[?25h[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;63H[K[7;21H[?12l[?25h[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;62H[K[7;20H[?12l[?25h[?25lr rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;21H[?12l[?25h[?25lo rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;22H[?12l[?25h[?25lo rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;23H[?12l[?25h[?25lt rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;24H[?12l[?25h0[?25l/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;65H[K[7;16H[?12l[?25h[?25l/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;64H[K[7;15H[?12l[?25h[?25l/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;63H[K[7;14H[?12l[?25h[?25l/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;62H[K[7;13H[?12l[?25h[?25lo/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;14H[?12l[?25h[?25lt/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;15H[?12l[?25h[?25lGroot/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;63H[K[7;9H[?12l[?25h[?25lGroot/LVroot rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet"[7;62H[K[7;8H[?12l[?25hGroot/LVroot rd.lvm.lv=Vol[?25lGroup00/LogVol01 rhgb quiet"[7;61H[K[7;33H[?12l[?25h[?25lGroup00/LogVol01 rhgb quiet"[7;60H[K[7;32H[?12l[?25hGroup00[?25l/LogVol01 rhgb quiet"[7;59H[K[7;38H[?12l[?25h[?25l/LogVol01 rhgb quiet"[7;58H[K[7;37H[?12l[?25h[?25l/LogVol01 rhgb quiet"[7;57H[K[7;36H[?12l[?25h[?25l/LogVol01 rhgb quiet"[7;56H[K[7;35H[?12l[?25h[?25lo/LogVol01 rhgb quiet"[7;36H[?12l[?25h[?25lt/LogVol01 rhgb quiet"[7;37H[?12l[?25h/Log[?25lVol01 rhgb quiet"[7;57H[K[7;40H[?12l[?25h[?25lVol01 rhgb quiet"[7;56H[K[7;39H[?12l[?25hVol01[?25l rhgb quiet"[7;55H[K[7;43H[?12l[?25h[?25l rhgb quiet"[7;54H[K[7;42H[?12l[?25h[?25l rhgb quiet"[7;53H[K[7;41H[?12l[?25h[?25l rhgb quiet"[7;52H[K[7;40H[?12l[?25h[?25ls rhgb quiet"[7;41H[?12l[?25h[?25lw rhgb quiet"[7;42H[?12l[?25h[?25la rhgb quiet"[7;43H[?12l[?25h[?25lp rhgb quiet"[7;44H[?12l[?25h[8;29H[33;1H[K[8;28H[?25l[?12l[?25h[?25l[33;1H:[?12l[?25hwq[?25l"/etc/default/grub" 7L, 376C written
+[?1l>[?12l[?25h[?1049l]0;root@lvm:~[root@lvm ~]# vi /etc/default/grub [1P[1P[1@c[1@a[1@t
+GRUB_TIMEOUT=1
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VGroot/LVroot rd.lvm.lv=VGroot/LVswap rhgb quiet"
+GRUB_DISABLE_RECOVERY="true"
+]0;root@lvm:~[root@lvm ~]# vi /boot/grub2/grub.cfg.[K
+[?1049h[?1h=[1;33r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[33;1H"/boot/grub2/grub.cfg" 127L, 3607C[1;1H#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub2-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+set pager=1
+
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="${saved_entry}"
+fi
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"[1;1H[?12l[?25h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[?25l[1;32r[32;1H
+[1;33r[32;3Hsave_env saved_entry[33;1H[K[32;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hset prev_saved_entry=[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hsave_env prev_saved_entry[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hset boot_once=true[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hfi[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hfunction savedefault {[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hif [ -z "${boot_once}" ]; then[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hsaved_entry="${chosen}"[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hsave_env saved_entry[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hfi[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H}[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hfunction load_video {[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hif [ x$feature_all_video_module = xy ]; then[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod all_video[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Helse[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod efi_gop[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod efi_uga[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod ieee1275_fb[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod vbe[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod vga[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod video_bochs[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hinsmod video_cirrus[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hfi[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H}[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hterminal_output console[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hif [ x$feature_timeout_style = xy ] ; then[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hset timeout_style=menu[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hset timeout=1[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H# Fallback normal timeout code in case the timeout_style feature is[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H# unavailable.[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Helse[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hset timeout=1[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hfi[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H### END /etc/grub.d/00_header ###[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H### BEGIN /etc/grub.d/00_tuned ###[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hset tuned_params=""[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hset tuned_initrd=""[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H### END /etc/grub.d/00_tuned ###[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H### BEGIN /etc/grub.d/01_users ###[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hif [ -f ${prefix}/user.cfg ]; then[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hsource ${prefix}/user.cfg[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hif [ -n "${GRUB2_PASSWORD}" ]; then[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hset superusers="root"[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hexport superusers[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;5Hpassword_pbkdf2 root ${GRUB2_PASSWORD}[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;3Hfi[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1Hfi[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H### END /etc/grub.d/01_users ###[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H### BEGIN /etc/grub.d/10_linux ###[?12l[?25h[?25l[1;32r[1;1H[2M[1;33r[31;1Hmenuentry 'CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $$[32;1Hmenuentry_id_option 'gnulinux-3.10.0-862.2.3.el7.x86_64-advanced-b60e9498-0baa-4d9f-90aa-069048217fee' {[31;1H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hload_video[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hset gfxpayload=keep[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hinsmod gzio[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hinsmod part_msdos[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hinsmod xfs[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hset root='hd0,msdos2'[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hif [ x$feature_platform_search_hint = xy ]; then[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;11Hsearch --no-floppy --fs-uuid --set=root --hint='hd0,msdos2'  570897ca-e759-4c81-90cf-389da6eee4cc[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Helse[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;11Hsearch --no-floppy --fs-uuid --set=root 570897ca-e759-4c81-90cf-389da6eee4cc[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hfi[?12l[?25h[?25l[1;32r[1;1H[3M[1;33r[30;9Hlinux16 /vmlinuz-3.10.0-862.2.3.el7.x86_64 root=/dev/mapper/VolGroup00-LogVol00 ro no_timer_check console=tty0 console=ttyS0,11[31;1H15200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quu[32;1Hiet[30;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;9Hinitrd16 /initramfs-3.10.0-862.2.3.el7.x86_64.img[32;8H[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H}[?12l[?25h[31;8H[28;8H[27;8H[28;8H[?25l[33;1H[1m-- INSERT --[28;1H[?12l[?25h
+
+
+[8C[28;9H[mlinux16 /vmlinuz-3.10[8C.3.el7.x86_64 root=/dev/mapper/Vol[?25lGroup00-LogVol00 ro no_timer_check console=tty0 console=ttyS0,111[29;1H5200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quii[30;1Het [28;71H[?12l[?25h[?25lGroup00-LogVol00 ro no_timer_check console=tty0 console=ttyS0,1155[29;1H200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiee[30;1Ht [28;70H[?12l[?25hGroup00[?25l-LogVol00 ro no_timer_check console=tty0 console=ttyS0,11522[29;1H00n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiett[30;1H [28;76H[?12l[?25h[?25l[28;32r[32;1H
+[1;33r[28;1H        linux16 /vmlinuz-3.10.0-862.2.3.el7.x86_64 root=/dev/mapper/VGroup-LogVol00 ro no_timer_check console=tty0 console=ttyS0,115200[29;1H0n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet
+
+
+if [ "x$default" = 'CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)' ]; then default='Advanced options for CentOS Linux>CentOS Linux[32;1H[94m@                                                                                                                                     [28;75H[?12l[?25h[?25l[m-LogVol00 ro no_timer_check console=tty0 console=ttyS0,1152000[29;1Hn8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;74H[?12l[?25h[?25l-LogVol00 ro no_timer_check console=tty0 console=ttyS0,115200nn[29;1H8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;73H[?12l[?25h[?25lo-LogVol00 ro no_timer_check console=tty0 console=ttyS0,1152000[29;1Hn8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[28;74H[?12l[?25h[?25lt-LogVol00 ro no_timer_check console=tty0 console=ttyS0,115200[29;1H0n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[28;75H[?12l[?25h-Log[?25lVol00 ro no_timer_check console=tty0 console=ttyS0,1152000[29;1Hn8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;78H[?12l[?25h[?25lVol00 ro no_timer_check console=tty0 console=ttyS0,115200nn[29;1H8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;77H[?12l[?25hVol00[?25l ro no_timer_check console=tty0 console=ttyS0,115200n88[29;1H net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;81H[?12l[?25h[?25l ro no_timer_check console=tty0 console=ttyS0,115200n8  [29;1Hnet.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;80H[?12l[?25h[?25l ro no_timer_check console=tty0 console=ttyS0,115200n8 nn[29;1Het.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;79H[?12l[?25h[?25l ro no_timer_check console=tty0 console=ttyS0,115200n8 nee[29;1Ht.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [28;78H[?12l[?25h[?25lr ro no_timer_check console=tty0 console=ttyS0,115200n8 nn[29;1Het.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[28;79H[?12l[?25h[?25lo ro no_timer_check console=tty0 console=ttyS0,115200n8  [29;1Hnet.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[28;80H[?12l[?25h[?25lo ro no_timer_check console=tty0 console=ttyS0,115200n88[29;1H net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[28;81H[?12l[?25h[?25lt ro no_timer_check console=tty0 console=ttyS0,115200nn[29;1H8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[28;82H[?12l[?25h ro no_timer_check console=tty0 console=ttyS0,115200
+8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VolGl[?25lGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;74H[?12l[?25h[?25lGroup00/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;73H[?12l[?25hGroup00[?25l/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;79H[?12l[?25h[?25l/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;78H[?12l[?25h[?25l/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;77H[?12l[?25h[?25l/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;76H[?12l[?25h[?25l/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;75H[?12l[?25h[?25lo/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[29;76H[?12l[?25h[?25lo/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[29;77H[?12l[?25h[?25lt/LogVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[29;78H[?12l[?25h[30;58H[28;35H2[30;36H[28;36H.2.3.el7.x86_64 root=/dev/mapper/VGroot-[7Cro [15C[7C=tty0 [7C=ttyS0,
+8 net.[7C=0 [11C=0 [8C=noop [11C=auto rd.lvm.lv=VGroot/Log[?25lVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;81H[?12l[?25h[?25lVol00 rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;80H[?12l[?25hVol00[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;84H[?12l[?25h[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;83H[?12l[?25h[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;82H[?12l[?25h[?25l rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet [29;81H[?12l[?25h[?25lr rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[29;82H[?12l[?25h[?25lo rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[29;83H[?12l[?25h[?25lo rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[29;84H[?12l[?25h[?25lt rd.lvm.lv=VolGroup00/LogVol01 rhgb quiet[29;85H[?12l[?25h rd.lvm.lv=Vol[?25lGroup00/LogVol01 rhgb quiet [29;98H[?12l[?25h[?25lGroup00/LogVol01 rhgb quiet [29;97H[?12l[?25hGroup00[?25l/LogVol01 rhgb quiet [29;103H[?12l[?25h[?25l/LogVol01 rhgb quiet [29;102H[?12l[?25h[?25l/LogVol01 rhgb quiet [29;101H[?12l[?25h[?25l/LogVol01 rhgb quiet [29;100H[?12l[?25h[?25lo/LogVol01 rhgb quiet[29;101H[?12l[?25h[?25lt/LogVol01 rhgb quiet[29;102H[?12l[?25h/Log[?25lVol01 rhgb quiet [29;105H[?12l[?25h[?25lVol01 rhgb quiet [29;104H[?12l[?25hVol01[?25l rhgb quiet [29;108H[?12l[?25h[?25l rhgb quiet [29;107H[?12l[?25h[?25l rhgb quiet [29;106H[?12l[?25h[?25l rhgb quiet [29;105H[?12l[?25h[?25ls rhgb quiet[29;106H[?12l[?25h[?25lw rhgb quiet[29;107H[?12l[?25h[?25la rhgb quiet[29;108H[?12l[?25h[?25lp rhgb quiet[29;109H[?12l[?25h[30;58H
+}[?25l[1;32r[32;1H
+[1;33r[31;1Hif [ "x$default" = 'CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)' ]; then default='Advanced options for CentOS Linux>CentOS Linuxx[32;1H (3.10.0-862.2.3.el7.x86_64) 7 (Core)'; fi;[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H### END /etc/grub.d/10_linux ###[?12l[?25h[?25l[1;32r[32;1H
+[1;33r[32;1H[?12l[?25h[31;33H[30;44H[28;2H[33;1H[K[28;1H[?25l[?12l[?25h[?25l[33;1H:[?12l[?25hwq[?25l"/boot/grub2/grub.cfg" 127L, 3589C written
+[?1l>[?12l[?25h[?1049l]0;root@lvm:~[root@lvm ~]# vi /boot/grub2/grub.cfg[1P /boot/grub2/grub.cfg[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P /boot/grub2/grub.cfg[C[C[C[C[C[C[C[C[C[C[C[C[C[Cc /boot/grub2/grub.cfg[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ca /boot/grub2/grub.cfg[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ct /boot/grub2/grub.cfg[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+#
+# DO NOT EDIT THIS FILE
+#
+# It is automatically generated by grub2-mkconfig using templates
+# from /etc/grub.d and settings from /etc/default/grub
+#
+
+### BEGIN /etc/grub.d/00_header ###
+set pager=1
+
+if [ -s $prefix/grubenv ]; then
+  load_env
+fi
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="${saved_entry}"
+fi
+
+if [ x"${feature_menuentry_id}" = xy ]; then
+  menuentry_id_option="--id"
+else
+  menuentry_id_option=""
+fi
+
+export menuentry_id_option
+
+if [ "${prev_saved_entry}" ]; then
+  set saved_entry="${prev_saved_entry}"
+  save_env saved_entry
+  set prev_saved_entry=
+  save_env prev_saved_entry
+  set boot_once=true
+fi
+
+function savedefault {
+  if [ -z "${boot_once}" ]; then
+    saved_entry="${chosen}"
+    save_env saved_entry
+  fi
+}
+
+function load_video {
+  if [ x$feature_all_video_module = xy ]; then
+    insmod all_video
+  else
+    insmod efi_gop
+    insmod efi_uga
+    insmod ieee1275_fb
+    insmod vbe
+    insmod vga
+    insmod video_bochs
+    insmod video_cirrus
+  fi
+}
+
+terminal_output console
+if [ x$feature_timeout_style = xy ] ; then
+  set timeout_style=menu
+  set timeout=1
+# Fallback normal timeout code in case the timeout_style feature is
+# unavailable.
+else
+  set timeout=1
+fi
+### END /etc/grub.d/00_header ###
+
+### BEGIN /etc/grub.d/00_tuned ###
+set tuned_params=""
+set tuned_initrd=""
+### END /etc/grub.d/00_tuned ###
+
+### BEGIN /etc/grub.d/01_users ###
+if [ -f ${prefix}/user.cfg ]; then
+  source ${prefix}/user.cfg
+  if [ -n "${GRUB2_PASSWORD}" ]; then
+    set superusers="root"
+    export superusers
+    password_pbkdf2 root ${GRUB2_PASSWORD}
+  fi
+fi
+### END /etc/grub.d/01_users ###
+
+### BEGIN /etc/grub.d/10_linux ###
+menuentry 'CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)' --class centos --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-3.10.0-862.2.3.el7.x86_64-advanced-b60e9498-0baa-4d9f-90aa-069048217fee' {
+	load_video
+	set gfxpayload=keep
+	insmod gzio
+	insmod part_msdos
+	insmod xfs
+	set root='hd0,msdos2'
+	if [ x$feature_platform_search_hint = xy ]; then
+	  search --no-floppy --fs-uuid --set=root --hint='hd0,msdos2'  570897ca-e759-4c81-90cf-389da6eee4cc
+	else
+	  search --no-floppy --fs-uuid --set=root 570897ca-e759-4c81-90cf-389da6eee4cc
+	fi
+	linux16 /vmlinuz-3.10.0-862.2.3.el7.x86_64 root=/dev/mapper/VGroot-LVroot ro no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto rd.lvm.lv=VGroot/LVroot rd.lvm.lv=VGroot/LVswap rhgb quiet 
+	initrd16 /initramfs-3.10.0-862.2.3.el7.x86_64.img
+}
+if [ "x$default" = 'CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)' ]; then default='Advanced options for CentOS Linux>CentOS Linux (3.10.0-862.2.3.el7.x86_64) 7 (Core)'; fi;
+### END /etc/grub.d/10_linux ###
+
+### BEGIN /etc/grub.d/20_linux_xen ###
+### END /etc/grub.d/20_linux_xen ###
+
+### BEGIN /etc/grub.d/20_ppc_terminfo ###
+### END /etc/grub.d/20_ppc_terminfo ###
+
+### BEGIN /etc/grub.d/30_os-prober ###
+### END /etc/grub.d/30_os-prober ###
+
+### BEGIN /etc/grub.d/40_custom ###
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+### END /etc/grub.d/40_custom ###
+
+### BEGIN /etc/grub.d/41_custom ###
+if [ -f  ${config_directory}/custom.cfg ]; then
+  source ${config_directory}/custom.cfg
+elif [ -z "${config_directory}" -a -f  $prefix/custom.cfg ]; then
+  source $prefix/custom.cfg;
+fi
+### END /etc/grub.d/41_custom ###
+]0;root@lvm:~[root@lvm ~]# exit
+
+Script done on Sun 01 Sep 2019 01:05:18 PM UTC
