@@ -41,12 +41,12 @@
 
     [typescript](typescript) - Процесс переименования vg и lv  
     
-    После загузки получим:  
-    [root@lvm ~]# vgs
-    VG     #PV #LV #SN Attr   VSize   VFree
-    VGroot   1   2   0 wz--n- <38.97g    0 
-    [root@lvm ~]# lvs
-    LV     VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-    LVroot VGroot -wi-ao---- <37.47g                                                    
-    LVswap VGroot -wi-ao----   1.50g
+     После загузки получим:  
+     [root@lvm ~]# vgs  
+     VG     #PV #LV #SN Attr   VSize   VFree  
+     VGroot   1   2   0 wz--n- <38.97g    0  
+     [root@lvm ~]# lvs  
+     LV     VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert  
+     LVroot VGroot -wi-ao---- <37.47g  
+     LVswap VGroot -wi-ao----   1.50g  
 
