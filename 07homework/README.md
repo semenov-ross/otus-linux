@@ -31,6 +31,7 @@
 
 
 * Переименовываем VG и LV  
+  
 
     vgrename VolGroup00 VGroot
     lvrename VGroot LogVol00 LVroot
