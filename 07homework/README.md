@@ -1,6 +1,6 @@
 ## Загрузка системы  
 
-  * Попасть в систему без пароля  
+* Попасть в систему без пароля  
 
     Способ 1.  
 
@@ -30,16 +30,16 @@
     exit  
 
 
-  * Переименовываем VG и LV  
+* Переименовываем VG и LV  
 
-    vgrename VolGroup00 VGroot  
-    lvrename VGroot LogVol00 LVroot  
-    lvrename VGroot LogVol01 LVswap  
+    vgrename VolGroup00 VGroot
+    lvrename VGroot LogVol00 LVroot
+    lvrename VGroot LogVol01 LVswap
 
-    Далее правим /etc/fstab, /etc/default/grub, /boot/grub2/grub.cfg.  
-    Везде заменяем старое название на новое.  
+Далее правим /etc/fstab, /etc/default/grub, /boot/grub2/grub.cfg.  
+Везде заменяем старое название на новое.  
 
-    [typescript](typescript) - Процесс переименования vg и lv  
+[typescript](typescript) - Процесс переименования vg и lv  
 
 После загузки получим:  
 
