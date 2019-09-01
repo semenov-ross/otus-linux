@@ -52,3 +52,13 @@
      LVroot VGroot -wi-ao---- <37.47g 
      LVswap VGroot -wi-ao----   1.50g 
 
+### Добавляем модуль в initrd  
+
+[typescript_mod](typescript_mod) - Процесс добавление модуля в initrd
+
+    mkdir /usr/lib/dracut/modules.d/01test
+    cd /usr/lib/dracut/modules.d/01test
+    vi module-setup.sh
+    vi test.sh
+    dracut -f -v
+    lsinitrd -m /boot/initramfs-$(uname -r).img | grep test
