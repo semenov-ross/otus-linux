@@ -11,12 +11,14 @@
 Попадаем в emergency mode  
 После загрузки оболочки необходимо перемонтировать корневой раздел в режим RW:  
 
+```console
     mount -o remount,rw /sysroot
     chroot /sysroot
     passwd
     touch /.autorelabel
     exit
     exit
+```
 
   * Способ 2  
 
@@ -25,11 +27,13 @@
 Меняем ro на rw  
 Добавляем в конце строки rd.break enforcing=0 вместо rhgb quiet  
 
+```console
     chroot /sysroot
     passwd
     restorecon /etc/shadow (вместо touch /.autorelabel так как указали enforcing=0)
     exit
     exit
+```
 
   * Способ 3  
 
@@ -48,9 +52,11 @@
 
 ### Переименовываем VG и LV  
 
+```console
     vgrename VolGroup00 VGroot
     lvrename VGroot LogVol00 LVroot
     lvrename VGroot LogVol01 LVswap
+```
 
 Далее правим /etc/fstab, /etc/default/grub, /boot/grub2/grub.cfg.  
 Везде заменяем старое название на новое.  
@@ -59,6 +65,7 @@
 
 После загрузки получим:  
 
+```console
      [root@lvm ~]# vgs
      VG     #PV #LV #SN Attr   VSize   VFree
      VGroot   1   2   0 wz--n- <38.97g    0
@@ -66,14 +73,17 @@
      LV     VG     Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
      LVroot VGroot -wi-ao---- <37.47g 
      LVswap VGroot -wi-ao----   1.50g 
+```
 
 ### Добавляем модуль в initrd  
 
 [typescript_mod](typescript_mod) - Процесс добавление модуля в initrd
 
+```console
     mkdir /usr/lib/dracut/modules.d/01test
     cd /usr/lib/dracut/modules.d/01test
     vi module-setup.sh
     vi test.sh
     dracut -f -v
     lsinitrd -m /boot/initramfs-$(uname -r).img | grep test
+```
