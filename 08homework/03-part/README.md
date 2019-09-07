@@ -2,12 +2,12 @@
 
 При старте виртуальной машины при помощи [create_service.sh](create_service.sh) устанавливается httpd,
 затем в файл /usr/lib/systemd/system/httpd.service добавляется параметр %I в опцию EnvironmentFile
-и переименовываем unit файл httpd.service в httpd@.service...
-Создаем отдельные файлы окружения /etc/sysconfig/httpd-80 и /etc/sysconfig/httpd-8080 и указываем
+и переименовывается unit файл httpd.service в httpd@.service...
+Создаются отдельные файлы окружения /etc/sysconfig/httpd-80 и /etc/sysconfig/httpd-8080 и указываютя
 в них опции запуска сервера с отдельными конфигурационными файлами OPTIONS="-f conf/httpd-80.conf" и OPTIONS="-f conf/httpd-8080.conf".  
-После этого создаем отдельные конфигурационных файла для каждого инстанса сервера 
-/etc/httpd/conf/httpd-80.conf и /etc/httpd/conf/httpd-8080.conf и указываем на каких портах запускать и какой PID файл использовать.   
-Запускаем два инстанса сервера systemctl start httpd@80 и systemctl start httpd@8080  
+После этого создаютя отдельные конфигурационных файла для каждого инстанса сервера 
+/etc/httpd/conf/httpd-80.conf и /etc/httpd/conf/httpd-8080.conf и указывается на каких портах запускать и какой PID файл использовать.   
+Запускаютя два инстанса сервера httpd@80 и httpd@8080  
 
 Получаем результат запуска:  
 ```console
