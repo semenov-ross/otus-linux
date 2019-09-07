@@ -40,7 +40,7 @@ Pass --all to see loaded but inactive timers, too.
 
 Warning: Journal has been rotated since unit was started. Log output is incomplete or unavailable.
 ```
-В системном логи видим результат работы сервиса:
+В системном логе видим результат работы сервиса:
 ```console
 [root@lvm ~]# tail -5 /var/log/messages 
 Sep  7 07:30:02 localhost root: word "systemd" found in /var/log/messages: Sep  7 07:29:02 localhost root: word "systemd" found in /var/log/messages: Sep  7 07:28:01 localhost root: word "systemd" found in /var/log/messages: Sep  7 07:28:01 localhost systemd: Starting Monitoring systemlog...
