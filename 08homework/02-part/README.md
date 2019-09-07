@@ -1,7 +1,6 @@
 ## Из epel установить spawn-fcgi и переписать init-скрипт на unit-файл.
 
-
-При старте виртуальной машины устанавливается epel и из него spawn-fcgi,
+При старте виртуальной машины при помощи [create_service.sh](create_service.sh) устанавливается epel и из него spawn-fcgi,
 затем из [spawn-fcgi.service](spawn-fcgi.service) создается сервис spawn-fcgi и файл /etc/sysconfig/spawn-fcgi
 приводится к должному виду:  
 ```console
@@ -17,7 +16,7 @@ OPTIONS="-u apache -g apache -s $SOCKET -S -M 0600 -C 32 -F 1 -- /usr/bin/php-cg
 ```
 Так же сервис сразу активируется и стратует.  
 
-После старта машины можем увидеть результат provision:  
+После старта машины можем посмотреть статус сервиса:  
 ```console
 [root@lvm ~]# systemctl status spawn-fcgi.service 
 ● spawn-fcgi.service - Spawn-fcgi startup service
