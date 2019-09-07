@@ -13,7 +13,7 @@
 #
 # Example :
 SOCKET=/var/run/php-fcgi.sock
-OPTIONS="-u apache -g apache -s $SOCKET -S -M 0600 -C 32 -F 1 -P /var/run/spawn-fcgi.pid -- /usr/bin/php-cgi"
+OPTIONS="-u apache -g apache -s $SOCKET -S -M 0600 -C 32 -F 1 -- /usr/bin/php-cgi"
 ```
 Так же сервис сразу активируется и стратует.  
 
