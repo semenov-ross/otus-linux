@@ -1,0 +1,10 @@
+[Unit]
+Description=Monitoring systemlog
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/sysconfig/pars_log
+ExecStart=/vagrant/pars_log.sh "$OPTIONS"
+
+[Install]
+WantedBy=multi-user.target
