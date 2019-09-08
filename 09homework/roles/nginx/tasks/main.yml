@@ -1,0 +1,32 @@
+---
+# tasks file for roles/nginx
+
+- name: Install EPEL Repo package from standart repo
+  yum:
+    name: epel-release
+    state: present
+  tags:
+    - epel-package
+    - packages
+
+- name: Install nginx package from epel repo
+  yum:
+    name: nginx
+    state: present
+  tags:
+    - nginx_package
+    - packages
+
+- name: Change standart html file from template
+  template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+
+- name: Create nginx config from template
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify:
+   - restart nginx
+  tags:
+    - nginx-config

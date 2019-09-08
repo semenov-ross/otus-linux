@@ -1,0 +1,7 @@
+---
+- name: Install nginx on staging servers
+  hosts: centos7
+  become: yes
+
+  roles:
+    - nginx
