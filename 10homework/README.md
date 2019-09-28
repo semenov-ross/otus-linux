@@ -1,9 +1,9 @@
 ## Пользователи и группы. Авторизация и аутентификация
 
 При запуске виртуальной машины при помощи сценария ansible [playbooks/pam_login.yml](playbooks/pam_login.yml) с использованием ролей:
- [roles/pam_grp_admin](roles/pam_grp_admin) и [roles/pam_sudo](roles/pam_sudo), которые использует модули 
+ [roles/pam_grp_admin](roles/pam_grp_admin) и [roles/pam_sudo](roles/pam_sudo), которые используют модули 
  template, pamd, group, user, lineinfile, 
-создаёт скрипт /usr/local/bin/pam_login.sh из шаблона [pam_login.sh.j2](roles/pam_grp_admin/templates/pam_login.sh.j2), 
+создаётся скрипт /usr/local/bin/pam_login.sh из шаблона [pam_login.sh.j2](roles/pam_grp_admin/templates/pam_login.sh.j2), 
 добавляется строка "account required pam_exec.so /usr/local/bin/pam_login.sh" в файл /etc/pam.d/sshd:
 ```console
 [root@centos7 ~]# cat  /etc/pam.d/sshd
