@@ -18,3 +18,5 @@ Bash, awk, sed, grep и другие
 Инициализация системы. Systemd и SysV.  
 ## [09homework](09homework)
 Автоматизация администрирования. Ansible.  
+## [10homework](10homework)
+Пользователи и группы. Авторизация и аутентификация.  
