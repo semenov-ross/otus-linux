@@ -1,0 +1,8 @@
+---
+- name: Configure login user with PAM and add sudo
+  hosts: centos7
+  become: yes
+
+  roles:
+    - pam_grp_admin
+    - pam_sudo

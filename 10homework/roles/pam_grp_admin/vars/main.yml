@@ -1,0 +1,5 @@
+---
+# vars file for roles/pam_grp_admin
+
+password_adm: "111222"
+password_usr: "333444"

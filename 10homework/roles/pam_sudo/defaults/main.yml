@@ -1,0 +1,4 @@
+---
+# defaults file for roles/pam_sudo
+
+user_sudo: [admin]

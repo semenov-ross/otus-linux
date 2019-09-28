@@ -1,0 +1,49 @@
+---
+# tasks file for roles/pam_grp_admin
+
+- name: pam-login | Add script for PAM
+  template:
+    src: pam_login.sh.j2
+    dest: /usr/local/bin/pam_login.sh
+    owner: root
+    group: root
+    mode: 0755
+  tags:
+    - pam-add-scr
+
+- name: pam-login | Add rule in pam_exec.so to ssh 
+  pamd:
+    name: sshd
+    type: account
+    control: required
+    module_path: pam_nologin.so
+    new_type: account
+    new_control: required
+    new_module_path: pam_exec.so
+    module_arguments: /usr/local/bin/pam_login.sh
+    state: after
+  tags:
+    - pam-add-rule
+
+- name: pam-login | Create group 'admin'
+  group:
+    name: admin
+    state: present
+  tags:
+    - pam-add-group
+
+- name: pam-login | Add user 'admin' with password {{ password_adm }}
+  user:
+    name: admin
+    group: admin
+    password: "{{ password_adm | password_hash('sha512') }}"
+  tags:
+    - pam-add-admin
+
+- name: pam-login | Add user 'user' with password {{ password_usr }}
+  user:
+    name: user
+    password: "{{ password_usr | password_hash('sha512') }}"
+  tags:
+    - pam-add-user
+
