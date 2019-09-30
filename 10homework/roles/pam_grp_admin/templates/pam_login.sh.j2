@@ -11,7 +11,5 @@ day=$(date +%u)
 {% for day in off_hour_days %}
 if [[ $day -eq {{ day }} ]]; then
     exit 1
-else
-    exit 0
 fi
 {% endfor %}
