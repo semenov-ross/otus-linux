@@ -1,0 +1,16 @@
+---
+- name: Configure borg server
+  hosts: server
+  become: yes
+
+  roles:
+    - borg_server
+
+- name: Configure borg client
+  hosts: client
+  become: yes
+
+  roles:
+    - borg_client
+
+

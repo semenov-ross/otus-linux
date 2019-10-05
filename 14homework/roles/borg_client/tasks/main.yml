@@ -1,0 +1,56 @@
+---
+# tasks file for borg_client
+
+- name: Add EPEL Repo client
+  yum:
+    name: epel-release
+    state: present
+  tags:
+    - epel-package
+    - packages
+
+- name: Add client item /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item }}"
+  with_items:
+     - '192.168.11.101 server'
+     - '192.168.11.102 client'
+
+- name: Add packege client
+  yum:
+    name: borgbackup
+    state: present
+  tags:
+    - packages
+    - borgbackup
+
+- name: mkdir client  ~root/.ssh/
+  file:
+   path: /root/.ssh
+   state: directory
+   owner: root
+   group: root
+   mode: '700'
+
+- name: Add id_rsa client ~root/.ssh/
+  copy:
+   src: ./files/client
+   dest: /root/.ssh/id_rsa
+   group: root
+   owner: root
+   mode: '600'
+
+- name: keyscan client
+  shell: ssh-keyscan -t rsa server >> /root/.ssh/known_hosts
+
+- name: init repo client
+  shell:  borg init --encryption=none borg@server:backup_etc_client
+  failed_when: false
+
+- name: Add cron backup client
+  cron:
+    name: etc_backup
+    minute: "*/10"
+    job: 'borg create borg@server:backup_etc_client::"etc_backup-{now:\%Y-\%m-\%d_\%H:\%M:\%S}" /etc'
+

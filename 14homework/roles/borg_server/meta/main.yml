@@ -1,0 +1,10 @@
+galaxy_info:
+  author: ross
+  description: configure borg server
+  license: license (MIT)
+  min_ansible_version: 2.4
+
+  galaxy_tags: []
+
+dependencies: []
+  

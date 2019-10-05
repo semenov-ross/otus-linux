@@ -1,0 +1,38 @@
+---
+# tasks file for borg_server
+
+- name: Add EPEL Repo server
+  yum:
+    name: epel-release
+    state: present
+  tags:
+    - packages
+    - epel-package
+
+- name: Add server item /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item }}"
+  with_items:
+     - '192.168.11.101 server'
+     - '192.168.11.102 client'
+
+- name: Add packege server
+  yum:
+    name: borgbackup
+    state: present
+  tags:
+    - packages
+    - borgbackup
+
+- name: Add server user borg
+  user:
+    name: borg
+    password: "{{ password | password_hash('sha512') }}"
+    state: present
+
+- name: Add server pub key
+  authorized_key:
+    user: borg
+    state: present
+    key: "{{ lookup('file', './files/client.pub') }}"
