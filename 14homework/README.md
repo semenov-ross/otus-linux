@@ -2,7 +2,7 @@
 
 При запуске vagrant up при помощи сценария ansible [playbooks/backup.yml](playbooks/backup.yml) с использованием ролей:
  [roles/borg_server](roles/borg_server) и [roles/borg_client](roles/borg_client) подключается репозиторий EPEL, устанавливается пакет 
- borgbackup, настраиивается доступ по ssh с машины client к server по ключам, инициализируется репозеторий borg - backup_etc_client и 
+ borgbackup, настраивается доступ по ssh с машины client к server по ключам, инициализируется репозеторий borg - backup_etc_client и 
  добавляется задание на client, выполняющееся раз в 10 минут.  
 
 ```console
