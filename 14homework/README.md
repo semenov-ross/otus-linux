@@ -24,6 +24,11 @@ etc_backup-2019-10-05_15:00:02       Sat, 2019-10-05 15:00:04 [e28eda6ffef730432
 etc_backup-2019-10-05_15:10:01       Sat, 2019-10-05 15:10:03 [bb0b4c316174935b87d839c051d8680ba905ac3e06ef9b3d08748a2a5cc15073]
 etc_backup-2019-10-05_15:20:01       Sat, 2019-10-05 15:20:03 [3378b905c5c9f5f3dc8bf04720e11661d0c6e6ac87726f527517b0994c69fb5b]
 etc_backup-2019-10-05_15:30:02       Sat, 2019-10-05 15:30:03 [7b145f60fd7009f59c144720aaa4e3e4a1f9649c3b20787fe1680bc910540d0c]
+etc_backup-2019-10-05_15:40:02       Sat, 2019-10-05 15:40:03 [fabb654bc4cb5c019b20449225329e875fd595a398da62ee041320759d022136]
+etc_backup-2019-10-05_15:50:02       Sat, 2019-10-05 15:50:03 [662f537c3c4be05b550594c80cf82f08981702929d159d5d99515b5a7a536649]
+etc_backup-2019-10-05_16:00:02       Sat, 2019-10-05 16:00:03 [481060c8b9102bb2d61d5054e682356776a5e13f01e2b8c8d97336aca5277840]
+etc_backup-2019-10-05_16:10:02       Sat, 2019-10-05 16:10:03 [70d1e746d8372a395ab382cee47730948aeff9c939437d6d548d39891f07b731]
+etc_backup-2019-10-05_16:20:02       Sat, 2019-10-05 16:20:03 [4f86d7b4735d4b997f6f784b2cd671e0714f9e03437d03fbe50ec16d4ec173fc]
 ```
 
 Состояние резервных копий:  
@@ -36,8 +41,8 @@ Cache: /root/.cache/borg/8a29cc0df33a39c3b36e8e102261be2a739944e57631e983a20445d
 Security dir: /root/.config/borg/security/8a29cc0df33a39c3b36e8e102261be2a739944e57631e983a20445d55457bcb3
 ------------------------------------------------------------------------------
                        Original size      Compressed size    Deduplicated size
-All archives:              111.19 MB             52.79 MB             11.79 MB
+All archives:              250.17 MB            118.79 MB             11.79 MB
 
                        Unique chunks         Total chunks
-Chunk index:                    1281                 6748
+Chunk index:                    1286                15183
 ```
