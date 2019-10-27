@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  nginx:
+    image: semenovross/nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /vagrant/docker/log:/var/log/nginx:Z
+      - /vagrant/docker/www:/www:z
+    networks:
+      - www
+    links:
+      - php
+  php:
+    image: semenovross/php-fpm
+    volumes:
+      - /vagrant/docker/www:/www:z
+    networks:
+      - www
+
+networks:
+  www:
