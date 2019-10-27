@@ -3,14 +3,14 @@
 * [Dockerfile](docker/nginx/Dockerfile) - Dockerfile образа nginx
 * [Dockerfile](docker/php/Dockerfile) - Dockerfile образа php-fpm
 
-Собрать образ nginx на основе alpine:
+Сборка образа nginx на основе alpine:
 
 ```console
     cd /vagrant/docker/nginx
     docker build -t nginx .
 ```
 
-Собрать образ php-fpm на основе alpine:
+Сборка образа php-fpm на основе alpine:
 
 ```console
     cd /vagrant/docker/php
@@ -19,7 +19,7 @@
 Каталоги docker/log и docker/www используются как постоянные хранилища для контейнеров.
 
 
-### Загрузка образов на Docker Hub
+### Загрузка образов в dockerhub
 
 Вывести список локальных образов:
 ```console
@@ -30,7 +30,7 @@
     docker tag 1ea0bc6a95ee semenovross/nginx
     docker tag dfe545bae4f9 semenovross/php-fpm
 ```
-Загрузить образы на Docker Hub:
+Загрузить образы в dockerhub:
 ```console
     docker login --username=semenovross
     docker push semenovross/nginx
