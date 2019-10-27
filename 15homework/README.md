@@ -38,9 +38,10 @@
 ```
 Cсылка на репозиторий - https://hub.docker.com/u/semenovross
 
+### vagrant up
 
 При запуске vagrant up при выполнении провижининга [docker-compose.yml](docker/docker-compose.yml)
- c использованием образов на Docker Hub запускаются контейнеры 
+ c использованием образов с dockerhub запускаются контейнеры 
 
 Посмотреть phpinfo() можно по адресу http://192.168.11.101/
 
