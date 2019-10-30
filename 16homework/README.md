@@ -13,38 +13,38 @@ elk                        : ok=15   changed=12   unreachable=0    failed=0    s
 ```
 
 При конфигурировании хоста web добавляется правило аудита:
-
+```console
 -w /etc/nginx/nginx.conf -p wa
-
+```
 Хост передает логи аудита в rsuslog посредством модуля audisp syslog (/etc/audisp/plugins.d/syslog.conf):
-
+```console
 active = yes
 direction = out
 path = builtin_syslog
 type = builtin.
 args = LOG_LOCAL6
 format = string
-  
+```
 rsyslog передаёт логи audit на удалённый сервер log (/etc/rsyslog.conf):  
-
+```console
 local6.* @192.168.11.102:514
-
+```
 локально логи audit не сохраняются (/etc/audit/auditd.conf):  
-
+```console
 write_logs = no
-
+```
 в rsyslog.conf настроено сохранение критичных логов локально и для пересылки на удалённый сервер log:  
-
+```console
 *.crit /var/log/critical
 *.crit @192.168.11.102:514
-
+```
 filebeat установлен для пересылки логов nginx в logstash на хост elk (/etc/filebeat/filebeat.yml):  
-
+```console
     output.logstash:
       hosts: ["192.168.11.103:5044"]
-
+```
 Подключен модуль filebeat nginx (/etc/filebeat/modules.d/nginx.yml):
-
+```console
     - module: nginx
       access:
         enabled: true
@@ -52,10 +52,10 @@ filebeat установлен для пересылки логов nginx в logs
       error:
         enabled: true
         var.paths: ["/var/log/nginx/error.log"]
-
+```
 
 Сервер rsyslog настроен для приёма сообщений по протоколам tcp и udp:
-
+```console
     # Provides UDP syslog reception
     $ModLoad imudp
     $UDPServerRun 514
@@ -63,7 +63,6 @@ filebeat установлен для пересылки логов nginx в logs
     # Provides TCP syslog reception
     $ModLoad imtcp
     $InputTCPServerRun 514
-
+```
 На хосте elk eтановлены elasticsearch, logstash, kibana.  
-
 Результаты обрашения к хосту web(192.168.11.101) можно просмотреть в Kibana по адресу http://192.168.11.103:5601  
