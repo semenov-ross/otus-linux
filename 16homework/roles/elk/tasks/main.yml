@@ -1,0 +1,96 @@
+---
+
+- include: elastic-repo.yml
+
+- name: elk | install java-openjdk-devel java-openjdk
+  yum:
+    name:
+      - java-1.8.0-openjdk-devel
+      - java-1.8.0-openjdk
+    state: present
+  tags:
+    - java-package
+    - packages
+
+- name: elk | install elasticsearch, logstash, kibana
+  yum:
+    name:
+      - elasticsearch
+      - logstash
+      - kibana
+    state: present
+  tags:
+    - elk
+    - packages
+
+- name: elk | java initial memory limit for elasticsearch
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '^-Xms'
+    line: -Xms256m
+  notify:
+    - restart elasticsearch
+  tags:
+    - elk
+
+- name: elk | java maximum memory limit for elasticsearch
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '^-Xmx'
+    line: -Xmx256m
+  notify:
+    - restart elasticsearch
+  tags:
+    - elk
+
+- name: elk | set kibana listening ip
+  lineinfile:
+    path: /etc/kibana/kibana.yml
+    regexp: '^#server\.host'
+    line: 'server.host: "0.0.0.0"'
+    backrefs: yes
+  notify:
+    - restart kibana
+  tags:
+    - elk
+
+- name: elk | set kibana elasticsearch urls
+  lineinfile:
+    path: /etc/kibana/kibana.yml
+    regexp: '^#elasticsearch\.hosts'
+    line: 'elasticsearch.hosts: ["http://localhost:9200"]'
+    backrefs: yes
+  notify:
+    - restart kibana
+  tags:
+    - elk
+
+- name: elk | java initial memory limit for logstash
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '^-Xms'
+    line: -Xms256m
+  notify:
+    - restart logstash
+  tags:
+    - elk
+
+- name: elk | java maximum memory limit for logstash
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    regexp: '^-Xmx'
+    line: -Xmx256m
+  notify:
+    - restart logstash
+  tags:
+    - elk
+
+- name: elk | copy logstash configuration for nginx
+  copy:
+    src: logstash-nginx.conf
+    dest: /etc/logstash/conf.d
+    mode: 0644
+  notify:
+    - restart logstash
+  tags:
+    - elk

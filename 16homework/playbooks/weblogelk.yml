@@ -1,0 +1,18 @@
+---
+- name: install and configure nginx
+  hosts: web
+  become: true
+  roles:
+    - nginx
+
+- name: configure rsyslog
+  hosts: log
+  become: true
+  roles:
+    - rsyslog
+
+- name: install and configure elasticsearch, logstash, kibana
+  hosts: elk
+  become: true
+  roles:
+    - elk

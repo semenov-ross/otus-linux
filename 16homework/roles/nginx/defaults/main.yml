@@ -1,0 +1,14 @@
+---
+nginx_systemd_state: restarted
+nginx_systemd_enabled: yes
+nginx_listen_port: 80
+nginx_worker_connections: 1024
+
+rsyslog_server_host: 192.168.11.102
+rsyslog_server_port: 514
+
+logstash_server_host: 192.168.11.103
+logstash_server_port: 5044
+
+nginx_access_log_path: /var/log/nginx/access.log
+nginx_error_log_path: /var/log/nginx/error.log

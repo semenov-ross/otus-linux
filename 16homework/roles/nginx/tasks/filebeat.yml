@@ -1,0 +1,29 @@
+---
+- include_role:
+    name: elk
+    tasks_from: elastic-repo
+
+- name: elk | install filebeat
+  yum:
+    name: filebeat
+    state: present
+  tags:
+    - packages
+
+- name: elk | enable filebeat nginx module
+  template:
+    src: filebeat-nginx-module.yml.j2
+    dest: /etc/filebeat/modules.d/nginx.yml
+  notify:
+    - restart filebeat
+  tags:
+    - filebeat
+
+- name: elk | copy filebeat main config
+  template:
+    src: filebeat-conf.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+  notify:
+    - restart filebeat
+  tags:
+    - filebeat

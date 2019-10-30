@@ -1,0 +1,26 @@
+---
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: "{{ nginx_systemd_state }}"
+    enabled: "{{ nginx_systemd_enabled }}"
+
+- name: reload nginx
+  systemd:
+    name: nginx
+    state: reloaded
+
+- name: restart auditd
+  command: /sbin/service auditd restart
+
+- name: restart rsyslog
+  systemd:
+    name: rsyslog
+    state: restarted
+    enabled: yes
+
+- name: restart filebeat
+  systemd:
+    name: filebeat
+    state: restarted
+    enabled: yes

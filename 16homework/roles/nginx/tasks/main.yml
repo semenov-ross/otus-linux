@@ -1,0 +1,108 @@
+---
+- include: filebeat.yml
+
+- name: nginx | install epel repo
+  yum:
+    name: epel-release
+    state: present
+  tags:
+    - epel-package
+    - packages
+
+- name: nginx | install nginx from epel repo
+  yum:
+    name: nginx
+    state: latest
+  notify:
+    - restart nginx
+  tags:
+    - nginx-package
+    - packages
+
+- name: nginx | create nginx config
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify:
+    - reload nginx
+  tags:
+    - nginx-configuration
+
+- name: enable audit nginx.conf
+  lineinfile:
+    path: /etc/audit/rules.d/audit.rules
+    line: -w /etc/nginx/nginx.conf -p wa
+  notify:
+    - restart auditd
+  tags:
+    - audit
+
+- name: change facility for audit syslog plugin
+  lineinfile:
+    path: /etc/audisp/plugins.d/syslog.conf
+    regexp: '^args'
+    line: args = LOG_LOCAL6
+  notify:
+    - restart auditd
+  tags:
+    - audit
+
+- name: enable syslog plugin for audisp
+  lineinfile:
+    path: /etc/audisp/plugins.d/syslog.conf
+    regexp: '^active'
+    line: active = yes
+  notify:
+    - restart auditd
+  tags:
+    - audit
+
+- name: disable auditd logging local
+  lineinfile:
+    path: /etc/audit/auditd.conf
+    regexp: '^write_logs'
+    line: write_logs = no
+  notify:
+    - restart auditd
+  tags:
+    - audit
+
+- name: send audit messages to remote rsyslog server {{ rsyslog_server_host }}
+  lineinfile:
+    path: /etc/rsyslog.conf
+    regexp: '^local6.'
+    line: local6.* @{{ rsyslog_server_host }}:{{ rsyslog_server_port }}
+  notify:
+    - restart rsyslog
+  tags:
+    - rsyslog
+
+- name: disable local rsyslog audit messages on local6 facility
+  lineinfile:
+    path: /etc/rsyslog.conf
+    regexp: '^\*\.info;mail\.none;authpriv\.none;cron\.none;'
+    line: '*.info;mail.none;authpriv.none;cron.none;local6.none /var/log/messages'
+  notify:
+    - restart rsyslog
+  tags:
+    - rsyslog
+
+- name: save critical messages local
+  lineinfile:
+    path: /etc/rsyslog.conf
+    regexp: '^\*\.crit /var/log/critical'
+    line: '*.crit /var/log/critical'
+  notify:
+    - restart rsyslog
+  tags:
+    - rsyslog
+
+- name: send critical messages to remote rsyslog server {{ rsyslog_server_host }}
+  lineinfile:
+    path: /etc/rsyslog.conf
+    regexp: '^\*\.crit @{{ rsyslog_server_host }}:{{ rsyslog_server_port }}'
+    line: '*.crit @{{ rsyslog_server_host }}:{{ rsyslog_server_port }}'
+  notify:
+    - restart rsyslog
+  tags:
+    - rsyslog
