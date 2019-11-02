@@ -26,3 +26,5 @@ Bash, awk, sed, grep и другие
 Docker.  
 ## [16homework](16homework)
 Сбор и анализ логов.  
+## [18homework](18homework)
+Архитектура сетей.  
