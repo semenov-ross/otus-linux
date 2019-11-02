@@ -1,5 +1,5 @@
 ## Архитектура сетей
-При запуске vagrant up создаются 5 хостов:
+При запуске vagrant up создаются 7 хостов:
 ```console
 Current machine states:
 
