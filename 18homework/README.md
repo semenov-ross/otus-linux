@@ -1,4 +1,4 @@
-###Архитектура сетей
+### Архитектура сетей
 При запуске vagrant up создаются 5 хостов:
 ```console
 Current machine states:
@@ -12,7 +12,7 @@ office2Router             running (virtualbox)
 office2Server             running (virtualbox)
 ```
 
-###Схема стенда:
+## Схема стенда:
 ```console
 
 [office1Server] eth1<=192.168.2.66/26--- office1-test-server-net ----192.168.2.65/26=>eth3 [office1Router] eth1<=192.168.255.6/30-----+
