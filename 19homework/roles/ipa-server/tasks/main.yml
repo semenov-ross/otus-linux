@@ -1,0 +1,36 @@
+---
+- name: install ipa server
+  yum:
+    name:
+      - ipa-server
+      - ipa-server-dns
+    state: present
+  tags:
+    - ipa-server
+
+- name: update /etc/hosts file
+  template:
+    src=etc/hosts.j2
+    dest=/etc/hosts
+  tags:
+    - hosts
+
+- name: ipa server configure
+  command: ipa-server-install --setup-dns \
+                              --no-forwarders \
+                              --auto-reverse \
+                              --ds-password={{ ipa_ds_password }} \
+                              --admin-password={{ ipa_admin_password }} \
+                              --domain={{ ansible_domain }} \
+                              --realm={{ ansible_domain | upper }} \
+                              --hostname={{ ansible_fqdn }} \
+                              --auto-reverse \
+                              --enable-compat \
+                              --mkhomedir \
+                              --no-host-dns  \
+                              --ip-address={{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }} \
+                              --unattended
+  args:
+    creates: /etc/ipa/default.conf
+  tags:
+    - ipa-server

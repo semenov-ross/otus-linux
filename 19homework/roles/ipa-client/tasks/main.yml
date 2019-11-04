@@ -1,0 +1,31 @@
+---
+- name: install packages for ipa client
+  yum:
+    name:
+      - ipa-client
+    state: present
+  tags:
+    - ipa-client
+
+- name: update /etc/hosts
+  template:
+    src=etc/hosts.j2
+    dest=/etc/hosts
+  tags:
+    - hosts
+
+- name: ipa client configure
+  command: ipa-client-install --hostname={{ ansible_fqdn }} \
+                              --domain={{ ansible_domain }} \
+                              --server={{ ipa_server }} \
+                              --realm={{ ansible_domain | upper }} \
+                              --principal={{ ipa_admin_name }} \
+                              --password={{ ipa_admin_password }} \
+                              --mkhomedir \
+                              --unattend
+  args:
+    creates: /etc/ipa/default.conf
+  tags:
+    - ipa-client
+
+- include: ipa-user-create.yml

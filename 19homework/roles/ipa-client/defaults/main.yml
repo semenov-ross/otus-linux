@@ -1,0 +1,4 @@
+---
+ipa_server: ipaserver.otus.lan
+ipa_admin_name: admin
+ipa_admin_password: password

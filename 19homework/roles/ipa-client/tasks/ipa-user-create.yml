@@ -1,0 +1,23 @@
+---
+- name: generate rsa ssh keys
+  openssh_keypair:
+    path: /root/.ssh/id_rsa_maks_otus
+    size: 2048
+    comment: maks.otus
+  register: sshkey
+  tags:
+    - ipa-user
+
+- name: add user Maks Otus
+  ipa_user:
+    name: maks.otus
+    state: present
+    givenname: Maks
+    sn: Otus
+    sshpubkey:
+      - "{{ sshkey.public_key }}"
+    ipa_host: "{{ ipa_server }}"
+    ipa_user: "{{ ipa_admin_name }}"
+    ipa_pass: "{{ ipa_admin_password }}"
+  tags:
+    - ipa-user
