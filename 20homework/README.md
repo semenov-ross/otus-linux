@@ -43,7 +43,7 @@ Last login: Mon Nov  4 13:29:02 2019 from 192.168.255.2
 [root@inetRouter ~]#
 ```
 
-На хосте centralServer запущен nginx. 80й порт на inetRouter2 проброшен через 8080  
+На хосте centralServer запущен nginx. 80й порт на inetRouter2 проброшен через порт 8080  
 ```console
 [root@centralRouter ~]# curl -I 192.168.254.1:8080
 HTTP/1.1 200 OK
