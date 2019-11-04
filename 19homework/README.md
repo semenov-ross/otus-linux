@@ -12,7 +12,7 @@ ipaclient                 running (virtualbox)
 [roles/ipa-server](roles/ipa-server) и [roles/ipa-client](roles/ipa-client):  
  - Устанавливается FreeIPA сервер  
  - В файл /etc/hosts добавляются ipaserver.otus.lan и ipaclient.otus.lan  
- - Настраивает FreeIPA сервер  
+ - Настраивается FreeIPA сервер  
 
 ```console
 PLAY RECAP *********************************************************************
