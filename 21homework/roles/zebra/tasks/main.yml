@@ -1,0 +1,77 @@
+---
+# tasks file for zebra
+
+- name: Add EPEL Repo
+  yum:
+    name: epel-release
+    state: present
+
+
+- name: Add package quagga
+  yum:
+    name:
+      - quagga
+    state: present
+  tags:
+    - packages
+
+- name: Create conf zebra r1
+  copy:
+    src: r1-zebra.conf
+    dest: /etc/quagga/zebra.conf
+    mode: '0640'
+    owner: quagga
+    group: quagga
+  when: ansible_hostname == "R1"
+  notify: restart zebra
+
+- name: Create conf ospfd r1
+  copy:
+    src: r1-ospfd.conf
+    dest: /etc/quagga/ospfd.conf
+    mode: '0640'
+    owner: quagga
+    group: quagga
+  when: ansible_hostname == "R1"
+  notify: restart ospfd
+
+- name: Create conf zebra r2
+  copy:
+    src: r2-zebra.conf
+    dest: /etc/quagga/zebra.conf
+    mode: '0640'
+    owner: quagga
+    group: quagga
+  when: ansible_hostname == "R2"
+  notify: restart zebra
+
+- name: Create conf ospfd r2
+  copy:
+    src: r2-ospfd.conf
+    dest: /etc/quagga/ospfd.conf
+    mode: '0640'
+    owner: quagga
+    group: quagga
+  when: ansible_hostname == "R2"
+  notify: restart ospfd
+
+- name: Create conf zebra r3
+  copy:
+    src: r3-zebra.conf
+    dest: /etc/quagga/zebra.conf
+    mode: '0640'
+    owner: quagga
+    group: quagga
+  when: ansible_hostname == "R3"
+  notify: restart zebra
+
+- name: Create conf ospfd r3
+  copy:
+    src: r3-ospfd.conf
+    dest: /etc/quagga/ospfd.conf
+    mode: '0640'
+    owner: quagga
+    group: quagga
+  when: ansible_hostname == "R3"
+  notify: restart ospfd
+
