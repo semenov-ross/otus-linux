@@ -1,6 +1,6 @@
 ## Статическая и динамическая маршрутизация
 
-1. При запуске vagrant up при помощи сценария ansible [playbooks/ospf.yml](playbooks/ospf.yml) с использованием роли
+При запуске vagrant up при помощи сценария ansible [playbooks/ospf.yml](playbooks/ospf.yml) с использованием роли
 [roles/zebra](roles/zebra) создатся три виртуальные машины R1, R2 и R3,
 на которых устанавливается и настраивается OSPF на базе Quagga.  
 
