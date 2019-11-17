@@ -45,7 +45,7 @@ ns02.dns.lab.           3600    IN      A       192.168.50.11
 ;; WHEN: Sun Nov 17 09:05:35 UTC 2019
 ;; MSG SIZE  rcvd: 127
 
-dig @192.168.50.10 web2.dns.lab
+[vagrant@client ~]$ dig @192.168.50.10 web2.dns.lab
 
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-9.P2.el7 <<>> @192.168.50.10 web2.dns.lab
 ; (1 server found)
