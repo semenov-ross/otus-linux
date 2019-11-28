@@ -140,8 +140,8 @@ rtt min/avg/max/mdev = 0.266/0.403/0.641/0.168 ms
 VRF101 (id: 1)
 VRF100 (id: 0)
 ```
-На officeRouter созданы vlan интерфейсы с тегами 100 и 101 в netns с адресом 10.10.10.2. 
-Между netns и основным хостом создан veth линк 172.29.100.1-172.29.100.2 для маршуртизации трафика:
+На officeRouter созданы vlan интерфейсы с тегами 100 и 101 в VRF100 и VRF101 с адресом 10.10.10.2. 
+Между netns и основным хостом создан veth линк 172.29.100.1-172.29.100.2 и veth линк 172.29.101.1-172.29.101.2 для маршуртизации трафика:
 
 ```console
 [root@officeRouter ~]# ip netns exec VRF100 ip -4 a
@@ -150,6 +150,14 @@ VRF100 (id: 0)
        valid_lft forever preferred_lft forever
 7: veth100@if8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000 link-netnsid 0
     inet 172.29.100.2/30 scope global veth100
+       valid_lft forever preferred_lft forever
+
+[root@officeRouter ~]# ip netns exec VRF101 ip -4 a
+6: eth2.101@if4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000 link-netnsid 0
+    inet 10.10.10.2/24 scope global eth2.101
+       valid_lft forever preferred_lft forever
+9: veth101@if10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000 link-netnsid 0
+    inet 172.29.101.2/30 scope global veth101
        valid_lft forever preferred_lft forever
 ```
 
@@ -185,7 +193,7 @@ Chain POSTROUTING (policy ACCEPT)
 target     prot opt source               destination         
 NETMAP     all  --  10.10.10.0/24        0.0.0.0/0           10.10.101.0/24
 ```
-Маршрут по умолчанию в netns VRF100 и VRF101 через officeRouter 10.10.10.2:
+Маршрут по умолчанию в VRF100 и VRF101 через officeRouter 10.10.10.2:
 
 ```console
 [vagrant@testClient1 ~]$ ip r
