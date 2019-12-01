@@ -1,6 +1,6 @@
 ## Мосты, туннели и VPN.  
 
-При запуске vagrant up создатся три хоста:
+При запуске vagrant up создаются три хоста:
 
 ```console
 server                    running (virtualbox)
@@ -16,8 +16,8 @@ clientTun                 running (virtualbox)
   openvpn-server@server-tun.service                     loaded active running OpenVPN service for server/tun
 ```
 
-#### Хост server и clientTap связаны тунелем в режиме tap, который связывает сети, расположенные за дополнительно настроенным интерфейсом 
-br0 
+Хосты server и clientTap связаны тунелем в режиме tap, который связывает сети, расположенные за дополнительно настроенным интерфейсом br0 
+
 ```console
 [root@server ~]# cat /etc/sysconfig/network-scripts/ifcfg-br0 
 STP=no
@@ -66,32 +66,6 @@ bridge name     bridge id               STP enabled     interfaces
 br0             8000.e224fc497444       no              tap0
 ```
 
-Доступность с хоста server:
-
-```console
-[root@server ~]# ping 192.168.20.11 -c 3
-PING 192.168.20.11 (192.168.20.11) 56(84) bytes of data.
-64 bytes from 192.168.20.11: icmp_seq=1 ttl=64 time=1.92 ms
-64 bytes from 192.168.20.11: icmp_seq=2 ttl=64 time=1.00 ms
-64 bytes from 192.168.20.11: icmp_seq=3 ttl=64 time=1.58 ms
-
---- 192.168.20.11 ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2005ms
-rtt min/avg/max/mdev = 1.005/1.503/1.921/0.379 ms
-```
-Доступность с хоста clientTap:
-
-```console
-[vagrant@clientTap ~]$ping 192.168.20.10 -c 3
-PING 192.168.20.10 (192.168.20.10) 56(84) bytes of data.
-64 bytes from 192.168.20.10: icmp_seq=1 ttl=64 time=0.775 ms
-64 bytes from 192.168.20.10: icmp_seq=2 ttl=64 time=1.26 ms
-64 bytes from 192.168.20.10: icmp_seq=3 ttl=64 time=1.36 ms
-
---- 192.168.20.10 ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2004ms
-rtt min/avg/max/mdev = 0.775/1.132/1.362/0.259 ms
-````
 #### Результаты теста iperf3:
 
 ```console
@@ -167,7 +141,7 @@ Accepted connection from 192.168.20.11, port 42674
 [  5]   0.00-40.05  sec  0.00 Bytes  0.00 bits/sec                  sender
 [  5]   0.00-40.05  sec   901 MBytes   189 Mbits/sec                  receiver
 ```
-#### Хост server и clientTun объединены тунелем в режиме tun, который связывает сети 192.168.20.0/24 и  192.168.30.0/24.  
+#### Хосты server и clientTun объединены тунелем в режиме tun, который связывает сети 192.168.20.0/24 и  192.168.30.0/24.  
 
 Маршрут на хосте clientTun
 ```console
@@ -256,12 +230,12 @@ Accepted connection from 10.10.0.2, port 59990
 [  5]   0.00-40.05  sec  0.00 Bytes  0.00 bits/sec                  sender
 [  5]   0.00-40.05  sec   701 MBytes   147 Mbits/sec                  receiver
 ```
-### Для подключения к OpenVPN RAS с локальной машины необходимо использовать сертификаты и файлы конфигурации [OpenVPN RAS config](provisioning/clientLocal)
+#### Для подключения к OpenVPN RAS с локальной машины необходимо использовать сертификаты и файлы конфигурации [OpenVPN RAS config](provisioning/clientLocal)
 
 Подключение с локальной машины на виртуалку:
 
 ```console
-client]# openvpn --config client.conf 
+ openvpn --config client.conf 
 Sun Dec  1 23:58:48 2019 OpenVPN 2.4.8 x86_64-redhat-linux-gnu [SSL (OpenSSL)] [LZO] [LZ4] [EPOLL] [PKCS11] [MH/PKTINFO] [AEAD] built on Nov  1 2019
 Sun Dec  1 23:58:48 2019 library versions: OpenSSL 1.1.1d FIPS  10 Sep 2019, LZO 2.08
 Sun Dec  1 23:58:48 2019 TCP/UDP: Preserving recently used remote address: [AF_INET]127.0.0.1:1195
