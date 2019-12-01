@@ -1,0 +1,6 @@
+#!/bin/bash
+
+/sbin/brctl setfd br0 0
+/sbin/brctl addif br0 tap0
+/sbin/ip link set br0 up promisc on
+/sbin/ip link set tap0 up promisc on

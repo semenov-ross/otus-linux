@@ -1,0 +1,92 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install EPEL Repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: install OpenVPN
+    yum:
+      name:
+        - openvpn
+        - bridge-utils
+      state: present
+
+  - name: enable ipv4 forwarding
+    sysctl:
+      name: net.ipv4.conf.all.forwarding
+      value: '1'
+      sysctl_set: yes
+      reload: yes
+
+
+- hosts: server
+  become: true
+  tasks:
+
+  - name: copy openvpn files
+    copy: src={{ item }} dest=/etc/openvpn/server/ mode=preserve
+    with_fileglob:
+      - "{{ ansible_hostname }}/openvpn/*"
+
+  - name: copy bridge config
+    copy: src=server/ifcfg-br0 dest=/etc/sysconfig/network-scripts/ owner=root group=root mode=0644
+
+  - name: add route to clientTap via intra_net
+    command: ip route replace 172.29.1.10/32 dev eth1
+
+  - name: add route to clientTun via intra_net
+    command: ip route replace 172.29.2.10/32 dev eth1
+
+  - name: restart NetworkManager
+    systemd:
+      name: NetworkManager
+      state: restarted
+
+  - name: SELinux in permissive mode
+    selinux:
+      policy: targeted
+      state: permissive
+
+  - name: restart openvpn-tap
+    systemd:
+      name: openvpn-server@server-tap
+      state: restarted
+
+  - name: restart openvpn-tun
+    systemd:
+      name: openvpn-server@server-tun
+      state: restarted
+
+  - name: restart openvpn-ras
+    systemd:
+      name: openvpn-server@server-ras
+      state: restarted
+
+- hosts: clientT*
+  become: true
+  tasks:
+
+  - name: add route to server via intra_net
+    command: ip route replace 192.168.10.100/32 dev eth1
+
+  - name: copy bridge config
+    copy: src="{{ ansible_hostname }}/ifcfg-br0" dest=/etc/sysconfig/network-scripts/ owner=root group=root mode=0644
+
+  - name: copy openvpn files
+    copy: src={{ item }} dest=/etc/openvpn/client/
+    with_fileglob:
+      - "{{ ansible_hostname }}/openvpn/*"
+
+  - name: restart NetworkManager
+    systemd:
+      name: NetworkManager
+      state: restarted
+
+  - name: restart openvpn
+    systemd:
+      name: openvpn-client@client
+      state: restarted
