@@ -1,7 +1,7 @@
 ## Web сервера.  
 
 При запуске vagrant up при помощи сценария ansible [provisioning/playbook.yml](provisioning/playbook.yml) создаётся 
-виртуальная машина wwww, на которой установлен сервер nginx, в конфигурацию которого добавлено:
+виртуальная машина www, на которой установлен сервер nginx, в конфигурацию которого добавлено:
 
 ```console
 location / {
