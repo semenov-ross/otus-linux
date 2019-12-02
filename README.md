@@ -40,3 +40,5 @@ DNS/DHCP - настройка и обслуживание.
 Сетевые пакеты. VLAN'ы. LACP.  
 ## [25homework](25homework)
 Мосты, туннели и VPN.  
+## [26homework](26homework)
+Web сервера.  

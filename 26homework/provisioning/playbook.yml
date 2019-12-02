@@ -1,0 +1,23 @@
+---
+- hosts: www
+  become: true
+  tasks:
+
+  - name: install EPEL Repo 
+    yum:
+      name: epel-release
+      state: present
+
+  - name: install nginx
+    yum:
+      name: nginx
+      state: present
+
+  - name: copy nginx.conf
+    copy: src=nginx.conf dest=/etc/nginx/ owner=root group=root mode=0644 
+
+  - name: restart nginx
+    systemd:
+      name: nginx
+      state: restarted
+      enabled: yes
