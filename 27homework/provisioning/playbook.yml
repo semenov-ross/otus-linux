@@ -1,0 +1,31 @@
+---
+- hosts: mailServer
+  become: true
+  tasks:
+
+  - name: install package postfix, dovecot
+    yum:
+      name:
+        - postfix
+        - dovecot
+      state: present
+
+  - name: copy postfix main.cf
+    copy: src=main.cf dest=/etc/postfix owner=root group=root mode=0644
+
+  - name: copy dovecot dovecot.conf
+    copy: src=dovecot.conf dest=/etc/dovecot owner=root group=root mode=0644
+
+  - name: restart postfix and dovecot
+    systemd:
+      name: "{{ item }}"
+      state: restarted
+      enabled: yes
+    with_items:
+      - 'postfix'
+      - 'dovecot'
+
+  - name: Add user otus for send and recive mail
+    user: 
+      name: otus
+      password: "{{ 'otus' | password_hash('sha512') }}"
