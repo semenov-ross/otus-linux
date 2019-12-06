@@ -115,6 +115,7 @@ fa61316f-180d-11ea-8f64-5254008afee6:1
 1 row in set (0.00 sec)
 ```
 Видим, что таблицы bet.events_on_demand и bet.v_same_event исключены из репликации так, как это прописано в конфигурационном файле [05-binlog.cnf](roles/percona/files/slave/05-binlog.cnf). 
+
 В результате репликации запись появилась на сервере slave:
 ```console
 mysql> select * from bookmaker;
