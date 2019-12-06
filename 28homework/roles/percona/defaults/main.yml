@@ -1,0 +1,4 @@
+---
+# defaults file for percona
+
+root_mysql_pass: "P@ssw0rd"

@@ -1,0 +1,54 @@
+---
+# tasks file for percona
+
+- name: add percona repo
+  yum:
+    name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    state: present
+
+- name: install percona server
+  yum:
+    name:
+      - Percona-Server-server-57
+      - MySQL-python
+    state: present
+
+- name: copy config files for percona
+  copy:
+    src: "{{ item }}"
+    dest: /etc/my.cnf.d/
+    owner: root
+    group: root
+    mode: '0644'
+  with_items:
+    - "{{ ansible_hostname }}/"
+  notify:
+    - restart mysql
+  tags:
+    - config
+
+- name: restart mysqld percona
+  meta: flush_handlers
+
+- name: control my.cnf exists for root
+  stat:
+    path: /root/.my.cnf
+  register: mycnf_root
+
+- name: get root password in log
+  when: mycnf_root.stat.exists == false
+  shell: grep 'A temporary password is generated for root@localhost' /var/log/mysqld.log | sed 's/^.*root@localhost:\s//'
+  register: root_temp_password
+
+- name: change temp root password
+  when: mycnf_root.stat.exists == false
+  shell: 'mysql -e "set password = password(''{{ root_mysql_pass }}'');" --connect-expired-password -u root -p"{{ root_temp_password.stdout }}"'
+
+
+- name: copy root my.cnf
+  template:
+    src: root.cnf.j2
+    dest: /root/.my.cnf
+    force: yes
+    mode: 0600
+

@@ -1,0 +1,29 @@
+---
+# tasks file for master
+
+- name: create database bet
+  mysql_db:
+    login_user: root
+    name: bet
+    state: present
+
+- name: check bet database dump was produced
+  shell: 'mysql -Ne "SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = ''bet'') AND (TABLE_NAME = ''bookmaker'')"'
+  register: bookmaker_res
+
+- name: restore bet database
+  when: "bookmaker_res.stdout | int  == 0"
+  mysql_db:
+    login_user: root
+    name: bet
+    state: import
+    target: /vagrant/roles/master/files/bet.dmp
+
+- name: create user repl for replication
+  mysql_user:
+    login_user: root
+    name: "{{ repl_mysql_user }}"
+    host: "%"
+    password: "{{ repl_mysql_pass }}"
+    priv: "*.*:REPLICATION SLAVE"
+    state: present

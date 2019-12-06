@@ -1,0 +1,19 @@
+---
+- name: install and configure Percona mysql replication
+  hosts: all
+  become: true
+  roles:
+    - percona
+
+- name: configure master for replication
+  hosts: master
+  become: true
+  roles:
+    - master
+
+- name: configure slave for replication
+  hosts: slave
+  become: true
+  roles:
+    - slave
+

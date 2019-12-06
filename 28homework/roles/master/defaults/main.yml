@@ -1,0 +1,4 @@
+---
+# defaults file for master
+repl_mysql_user: "repl"
+repl_mysql_pass: "!OtusLinux2019"

@@ -1,0 +1,26 @@
+---
+# tasks file for slave
+
+- name: check slave replication status
+  mysql_replication:
+    mode: getslave
+  ignore_errors: true
+  register: slave_rep
+
+- name: configure replication on the slave.
+  when:
+      - (slave_rep.Is_Slave is defined and not slave_rep.Is_Slave) or (slave_rep.Is_Slave is not defined and slave_rep is failed)
+  mysql_replication:
+    mode: changemaster
+    master_host: 192.168.11.101
+    master_port: 3306
+    master_user: "{{ repl_mysql_user }}"
+    master_password: "{{ repl_mysql_pass }}"
+    master_auto_position: yes
+
+
+- name: start replication
+  when:
+      - (slave_rep.Is_Slave is defined and not slave_rep.Is_Slave) or (slave_rep.Is_Slave is not defined and slave_rep is failed)
+  mysql_replication:
+    mode: startslave

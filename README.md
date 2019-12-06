@@ -44,3 +44,5 @@ DNS/DHCP - настройка и обслуживание.
 Web сервера.  
 ## [27homework](27homework)
 Почта: SMTP, IMAP, POP3.  
+## [28homework](28homework)
+Mysql.  

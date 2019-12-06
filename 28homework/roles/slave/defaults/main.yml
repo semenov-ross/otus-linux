@@ -1,0 +1,5 @@
+---
+# defaults file for slave
+
+repl_mysql_user: "repl"
+repl_mysql_pass: "!OtusLinux2019"
