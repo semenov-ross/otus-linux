@@ -2,7 +2,7 @@
 
 Стенд настраивался с использованием статьи [Docker Compose Setup for InnoDB Cluster](https://mysqlrelease.com/2018/03/docker-compose-setup-for-innodb-cluster/). 
 Использованы последние актуальные версии mysql-server, mysql-shell и mysql-router на дату выполнения. 
-Образ mysql-shell создан на основе образа centos:7 и размещён в [dockerhub](https://hub.docker.com/repository/docker/semenovross/mysql-shell).
+Образ [mysql-shell](docker_mysql_cluster/mysql-shell) создан на основе образа centos:7 и размещён в [dockerhub](https://hub.docker.com/repository/docker/semenovross/mysql-shell).
 
 При запуске vagrant up в результате провижининга, при помощи [docker-compose](docker_mysql_cluster/docker-compose.yml) на созданной ВМ запускаются три контейнера docker 
 с сервером mysql, контейнер mysql-router и контейнер mysql-shell:
