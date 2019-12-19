@@ -1,4 +1,4 @@
-## MySQL - бэкап, репликация, кластер
+## MySQL кластер
 
 Стенд настраивался с использованием статьи [Docker Compose Setup for InnoDB Cluster](https://mysqlrelease.com/2018/03/docker-compose-setup-for-innodb-cluster/). 
 Использованы последние актуальные версии mysql-server, mysql-shell и mysql-router на дату выполнения. 
