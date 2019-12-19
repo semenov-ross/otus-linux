@@ -1,3 +1,5 @@
+## Mysql
+
 При запуске vagrant up при помощи сценария ansible [mysql.yml](playbooks/mysql.yml) ролью [percona](roles/percona/tasks/main.yml) 
 создаются два сервера, на которых устанавливается mysql Percona. Производится смена временного пароля пользователя root и создается файл [my.cnf](roles/percona/templates/root.cnf.j2) 
 для входа в mysql без ввода пароля,c добавлением опциий для mysqldump.

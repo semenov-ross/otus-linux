@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+    config.vm.hostname = "inodbcl"
+    config.vm.box = "centos/7"
+    config.vm.network "forwarded_port", guest: 6446, host: 6446
+    config.vm.define "inodbcl"
+    config.vm.provider :virtualbox do |vb|
+	vb.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+
+    config.vm.provision "shell", inline: <<-SHELL
+	yum -y install epel-release
+	yum -y install docker docker-compose mysql
+	systemctl start docker
+	systemctl enable docker
+	docker-compose -f /vagrant/docker_mysql_cluster/docker-compose.yml up -d
+    SHELL
+end

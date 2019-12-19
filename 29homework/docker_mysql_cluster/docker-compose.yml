@@ -1,0 +1,91 @@
+version: '3'
+
+services:
+  mysql-server-1:
+    image: mysql/mysql-server:8.0.18
+    env_file:
+      - mysql-server.env
+    ports:
+      - "33061:3306"
+    command: ["mysqld",
+      "--server_id=1",
+      "--binlog_checksum=NONE",
+      "--gtid_mode=ON",
+      "--enforce_gtid_consistency=ON",
+      "--log_bin",
+      "--log_slave_updates=ON",
+      "--master_info_repository=TABLE",
+      "--relay_log_info_repository=TABLE",
+      "--transaction_write_set_extraction=XXHASH64",
+      "--user=mysql",
+      "--skip-host-cache",
+      "--skip-name-resolve", 
+      "--default_authentication_plugin=mysql_native_password"]
+
+  mysql-server-2:
+    image: mysql/mysql-server:8.0.18
+    env_file:
+      - mysql-server.env
+    ports:
+      - "33062:3306"
+    command: ["mysqld",
+      "--server_id=2",
+      "--binlog_checksum=NONE",
+      "--gtid_mode=ON",
+      "--enforce_gtid_consistency=ON",
+      "--log_bin",
+      "--log_slave_updates=ON",
+      "--master_info_repository=TABLE",
+      "--relay_log_info_repository=TABLE",
+      "--transaction_write_set_extraction=XXHASH64",
+      "--user=mysql",
+      "--skip-host-cache",
+      "--skip-name-resolve", 
+      "--default_authentication_plugin=mysql_native_password"]
+
+  mysql-server-3:
+    image: mysql/mysql-server:8.0.18
+    env_file:
+      - mysql-server.env
+    ports:
+      - "33063:3306"
+    command: ["mysqld",
+      "--server_id=3",
+      "--binlog_checksum=NONE",
+      "--gtid_mode=ON",
+      "--enforce_gtid_consistency=ON",
+      "--log_bin",
+      "--log_slave_updates=ON",
+      "--master_info_repository=TABLE",
+      "--relay_log_info_repository=TABLE",
+      "--transaction_write_set_extraction=XXHASH64",
+      "--user=mysql",
+      "--skip-host-cache",
+      "--skip-name-resolve", 
+      "--default_authentication_plugin=mysql_native_password"]
+
+  mysql-shell:
+    env_file:
+      - mysql-shell.env
+    image: semenovross/mysql-shell
+    volumes:
+      - ./scripts/:/scripts/:z
+    depends_on:
+      - mysql-server-1
+      - mysql-server-2
+      - mysql-server-3
+    stdin_open: true
+    tty: true
+
+  mysql-router:
+    env_file:
+      - mysql-router.env
+    image: mysql/mysql-router:8.0.18
+    ports:
+      - "6446:6446"
+    depends_on:
+      - mysql-server-1
+      - mysql-server-2
+      - mysql-server-3
+      - mysql-shell
+    restart: on-failure
