@@ -76,7 +76,7 @@ No default schema selected; type \use <schema> to set one.
     "groupInformationSourceMember": "272e5e90e398:3306"
 }
 ```
-Проверим работу кластера с выключенной нодой:
+Выключим ноду mysql-server-3,находящуюся в режиме "mode": "R/W" и проверим работу кластера:
 ```console
 [root@inodbcl ~]# docker stop dockermysqlcluster_mysql-server-3_1
 dockermysqlcluster_mysql-server-3_1
