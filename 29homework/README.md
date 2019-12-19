@@ -201,7 +201,7 @@ No default schema selected; type \use <schema> to set one.
     "groupInformationSourceMember": "8981fe1001fc:3306"
 }
 ```
-Через пробошенный в vagrant порт 6446 подключаемся к кластеру через mysql-router:
+Подключаемся к кластеру с хоста через mysql-router:
 ```console
 mysql -h 127.0.0.1 -P 6446 -uroot -proot
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
