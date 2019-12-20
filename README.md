@@ -46,3 +46,5 @@ Web сервера.
 Почта: SMTP, IMAP, POP3.  
 ## [28homework](28homework)
 Mysql.  
+## [29homework](29homework)
+MySQL кластер.  
