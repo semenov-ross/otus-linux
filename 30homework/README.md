@@ -1,6 +1,6 @@
 ## PostgreSQL
 
-При запуске vagrant up по средством Vagrant Ansible Provisioner создаются 3 хоста master, slave и backup. 
+При запуске vagrant up посредством Vagrant Ansible Provisioner создаются 3 хоста master, slave и backup. 
 Конфиг postgresql.conf хоста master:
 ```console
 listen_addresses = '*'
@@ -69,6 +69,11 @@ trigger_file = '/tmp/postgresql.trigger'
 ```
 При добавлении на хосте master записи в таблицу homework, проверяем результат репликации на хосте slave:
 ```console
+[root@master ~]# su - postgres
+-bash-4.2$ psql 
+psql (11.6)
+Type "help" for help.
+
 postgres=# \c otus
 You are now connected to database "otus" as user "postgres"
 
