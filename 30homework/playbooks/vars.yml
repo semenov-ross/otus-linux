@@ -1,0 +1,11 @@
+---
+master_ip: 192.168.11.101
+
+repl_user: repluser
+repl_pass: '12345'
+repl_slot: standby_slot
+
+barman_user: barman
+barman_pass: barman
+barman_streaming_user: barman_streaming
+barman_streaming_pass: barman_streaming

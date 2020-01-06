@@ -1,0 +1,151 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Install EPEL Repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install PostgreSQL Yum Repository
+    yum:
+      name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+      state: present
+
+  - name: Install rpm packages for ansible PostgreSQL module
+    yum:
+      name: python-psycopg2
+      state: present
+
+- hosts:
+    - master
+    - slave
+  become: true
+  tasks:
+
+  - name: Install PostgreSQL server
+    yum:
+      name: postgresql11-server
+      state: present
+
+- hosts: master
+  become: true
+  vars_files:
+    - vars.yml
+  tasks:
+
+  - name: Check initialized database
+    stat:
+      path: "/var/lib/pgsql/11/data/PG_VERSION"
+    register: pg_ver
+
+  - name: PostgreSQL initdb
+    become_user: postgres
+    command: /usr/pgsql-11/bin/initdb -D /var/lib/pgsql/11/data
+    when: not pg_ver.stat.exists
+
+  - name: Copy config files
+    copy: src={{ item }} dest=/var/lib/pgsql/11/data/ owner=postgres group=postgres mode=0600
+    with_fileglob:
+      - "{{ ansible_hostname }}/*"
+
+  - name: Enable PostgreSQL server
+    systemd:
+      name: postgresql-11
+      state: started
+      enabled: yes
+
+  - name: Create user repluser for slave
+    postgresql_user:
+      name: "{{ repl_user }}"
+      password: "{{ repl_pass }}"
+      role_attr_flags: REPLICATION
+
+  - name: Create replication physical slot for slave
+    become_user: postgres
+    postgresql_slot:
+      slot_name: "{{ repl_slot }}"
+
+  - name: Create otus database
+    postgresql_db:
+      name: otus
+
+  - name: Create table homework in the otus database
+    postgresql_table:
+      db: otus
+      name: homework
+      columns:
+      - id serial primary key
+      - word varchar
+
+  - name: Create user barman for backup
+    postgresql_user:
+      name: "{{ barman_user }}"
+      password: "{{ barman_pass }}"
+      role_attr_flags: SUPERUSER
+
+  - name: Create user barman-streaming for backup
+    postgresql_user:
+      name: "{{ barman_streaming_user }}"
+      password: "{{ barman_streaming_pass }}"
+      role_attr_flags: REPLICATION
+
+- hosts: slave
+  become: true
+  vars_files:
+    - vars.yml
+  tasks:
+
+  - name: Check initialized database
+    stat:
+      path: "/var/lib/pgsql/11/data/PG_VERSION"
+    register: pg_ver
+
+  - name: Restore backup from master
+    become_user: postgres
+    command: /usr/pgsql-11/bin/pg_basebackup -X stream -h {{ master_ip }} -D /var/lib/pgsql/11/data/ -P -U {{ repl_user }}
+    when: not pg_ver.stat.exists
+
+  - name: Copy recovery config
+    template:
+      src: slave/recovery.conf.j2
+      dest: /var/lib/pgsql/11/data/recovery.conf
+      owner: postgres
+      group: postgres
+      mode: '0600'
+
+  - name: Enable PostgreSQL server
+    systemd:
+      name: postgresql-11
+      state: started
+      enabled: yes
+
+
+- hosts: backup
+  become: true
+  vars_files:
+    - vars.yml
+  tasks:
+
+  - name: Install barman
+    yum:
+      name:
+        - barman
+        - barman-cli
+        - postgresql11
+      state: present
+
+  - name: Copy barman config
+    template:
+      src: barman/master.conf.j2
+      dest: /etc/barman.d/master-streaming.conf
+      mode: '0644'
+
+  - name: Copy pgpass
+    template:
+      src: barman/pgpass.j2
+      dest: /var/lib/barman/.pgpass
+      owner: barman
+      group: barman
+      mode: '0600'
