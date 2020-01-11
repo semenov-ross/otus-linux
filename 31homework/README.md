@@ -73,7 +73,7 @@ member b196e323605bfbd1 is healthy: got healthy result from http://192.168.11.10
 cluster is healthy
 
 ```
-Клиенсткие подключения настроены через HAProxy ( Веб-интерфейс http://192.168.11.104:700 ):
+Клиенсткие подключения настроены через HAProxy ( Веб-интерфейс [192.168.11.104:700](http://192.168.11.104:700) ):
 ```console
 [root@haproxy ~]# cat /etc/haproxy/haproxy.cfg 
 global
