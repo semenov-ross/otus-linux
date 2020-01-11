@@ -1,0 +1,6 @@
+---
+# defaults file for patroni
+
+pg1_ip: 192.168.11.101
+pg2_ip: 192.168.11.102
+pg3_ip: 192.168.11.103

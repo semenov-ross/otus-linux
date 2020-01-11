@@ -1,0 +1,59 @@
+---
+
+- name: Install PostgreSQL, PgBouncer, etcd
+  hosts: db
+  become: yes
+  roles:
+    - patroni
+
+- name: Install HAProxy
+  hosts: hp
+  become: yes
+  roles:
+    - haproxy
+
+- name: Start etcd
+  hosts: hp
+  become: yes
+  gather_facts: no
+  strategy: free
+  tasks:
+    - name: Enable etcd service
+      systemd:
+        name: etcd
+        state: started
+        enabled: yes
+      delegate_to: "{{ item }}"
+      delegate_facts: yes
+      loop: "{{ groups['db'] }}"
+      ignore_errors: yes
+
+- name: Start patroni
+  hosts: hp
+  become: yes
+  gather_facts: no
+  strategy: free
+  tasks:
+    - name: Enable patroni service
+      systemd:
+        name: patroni
+        state: started
+        enabled: yes
+      delegate_to: "{{ item }}"
+      delegate_facts: yes
+      loop: "{{ groups['db'] }}"
+
+- name: Start pgbouncer
+  hosts: hp
+  become: yes
+  gather_facts: no
+  strategy: free
+  tasks:
+    - name: Enable pgbouncer service
+      systemd:
+        name: pgbouncer
+        state: started
+        enabled: yes
+      delegate_to: "{{ item }}"
+      delegate_facts: yes
+      loop: "{{ groups['db'] }}"

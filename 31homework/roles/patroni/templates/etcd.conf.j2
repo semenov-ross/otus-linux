@@ -1,0 +1,7 @@
+ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://{{ ansible_eth1.ipv4.address }}:2379"
+ETCD_LISTEN_PEER_URLS="http://{{ ansible_eth1.ipv4.address }}:2380"
+ETCD_NAME="{{ ansible_hostname }}"
+ETCD_INITIAL_ADVERTISE_PEER_URLS="http://{{ ansible_eth1.ipv4.address }}:2380"
+ETCD_ADVERTISE_CLIENT_URLS="http://{{ ansible_eth1.ipv4.address }}:2379"
+ETCD_INITIAL_CLUSTER="pg1=http://{{ pg1_ip }}:2380,pg2=http://{{ pg2_ip }}:2380,pg3=http://{{ pg3_ip }}:2380"
+ETCD_INITIAL_CLUSTER_TOKEN="otus"

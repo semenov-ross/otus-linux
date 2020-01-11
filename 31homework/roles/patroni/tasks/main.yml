@@ -1,0 +1,69 @@
+---
+# tasks file for patroni
+
+- name: Install EPEL Repo
+  yum:
+    name: epel-release
+    state: present
+
+- name: Install PostgreSQL Repo
+  yum:
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    state: present
+
+- name: Install rpm for ansible PostgreSQL
+  yum:
+    name: python-psycopg2
+    state: present
+
+- name: Install PostgreSQL server
+  yum:
+    name: postgresql12-server
+    state: present
+
+- name: Install PgBouncer
+  yum:
+    name: pgbouncer
+    state: present
+
+- name: Copy pgbouncer.ini
+  copy:
+    src: pgbouncer.ini
+    dest: /etc/pgbouncer/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy PgBouncer userlist.txt
+  copy:
+    src: userlist.txt
+    dest: /etc/pgbouncer/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install etcd
+  yum:
+    name: etcd
+    state: present
+
+- name: Copy etcd config file
+  template:
+    src: etcd.conf.j2
+    dest: /etc/etcd/etcd.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Install Patroni
+  yum:
+    name: https://github.com/cybertec-postgresql/patroni-packaging/releases/download/1.6.0-1/patroni-1.6.0-1.rhel7.x86_64.rpm
+    state: present
+
+- name: Copy patroni config file
+  template:
+    src: postgresql.yml.j2
+    dest: /opt/app/patroni/etc/postgresql.yml
+    owner: postgres
+    group: postgres
+    mode: '0600'

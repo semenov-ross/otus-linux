@@ -1,0 +1,35 @@
+---
+# tasks file for haproxy
+
+- name: Install PostgreSQL repo
+  yum:
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    state: present
+
+- name: Install packages haproxy, PostgreSQL client, policycoreutils-python
+  yum:
+    name:
+      - haproxy
+      - postgresql12
+      - policycoreutils-python
+    state: present
+
+- name: Copy haproxy.cfg
+  copy:
+    src: haproxy.cfg
+    dest: /etc/haproxy/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Set selinux haproxy_connect_any
+  seboolean:
+    name: haproxy_connect_any
+    state: yes
+    persistent: yes
+
+- name: Enable haproxy service
+  systemd:
+    name: haproxy
+    state: started
+    enabled: yes

@@ -1,0 +1,43 @@
+scope: otus
+name: {{ ansible_hostname }}
+
+restapi:
+  listen: 0.0.0.0:8008
+  connect_address: {{ ansible_eth1.ipv4.address }}:8008
+
+etcd:
+  hosts: localhost:2379
+  protocol: http
+
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout : 10
+    maximum_lag_on_failover: 1048576
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+        wal_keep_segments: 100
+
+  initdb:
+  - encoding: UTF8
+  - data-checksums
+
+  pg_hba:
+  - host replication replicator 0.0.0.0/0 md5
+  - host all all 0.0.0.0/0 md5
+
+postgresql:
+  listen: 0.0.0.0:5432
+  connect_address: {{ ansible_eth1.ipv4.address }}:5432
+  data_dir: /var/lib/pgsql/otus/{{ ansible_hostname }}/data
+  bin_dir: /usr/pgsql-12/bin
+  authentication:
+    replication:
+      username: replicator
+      password: replicator
+    superuser:
+      username: postgres
+      password: otus
