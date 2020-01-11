@@ -43,11 +43,13 @@ DNS/DHCP - настройка и обслуживание.
 ## [26homework](26homework)
 Web сервера.  
 ## [27homework](27homework)
-Почта: SMTP, IMAP, POP3.
+Почта: SMTP, IMAP, POP3.  
 ## [28homework](28homework)
-Mysql.
+Mysql.  
 ## [29homework](29homework)
-MySQL кластер.
+MySQL кластер.  
 ## [30homework](30homework)
-PostgreSQL
+PostgreSQL  
+## [31homework](31homework)
+PostgreSQL cluster  
 

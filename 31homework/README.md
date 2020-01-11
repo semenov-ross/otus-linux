@@ -1,8 +1,8 @@
 ## PostgreSQL cluster
 Кластер PostgreSQL на Patroni
 
-При запуске vagrant up посредством Vagrant Ansible Provisioner создаются 4 хоста:pg1, pg2, pg3 и haproxy. 
-На кождом хосте pg установлен etcd и pgbouncer.
+При запуске vagrant up посредством Vagrant Ansible Provisioner создаются 4 хоста: pg1(192.168.11.101), pg2(192.168.11.102), pg3(192.168.11.103) и haproxy(192.168.11.104). 
+На каждом хосте pg установлен etcd и pgbouncer.
 
 Конфиг Patroni postgresql.yml:
 ```console
@@ -73,7 +73,7 @@ member b196e323605bfbd1 is healthy: got healthy result from http://192.168.11.10
 cluster is healthy
 
 ```
-Клиенсткие подключения настроены через HAProxy(192.168.11.104):
+Клиенсткие подключения настроены через HAProxy(Веб-интерфейс - http://192.168.11.104:700):
 ```console
 [root@haproxy ~]# cat /etc/haproxy/haproxy.cfg 
 global
