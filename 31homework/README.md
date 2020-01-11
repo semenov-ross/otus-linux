@@ -200,8 +200,6 @@ Type "help" for help.
 
 postgres=# create database otus;
 CREATE DATABASE
-postgres=# \c
-You are now connected to database "postgres" as user "postgres".
 postgres=# \c otus 
 You are now connected to database "otus" as user "postgres".
 otus=# create table homework (id serial, word varchar);
