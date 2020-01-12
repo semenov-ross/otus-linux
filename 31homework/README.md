@@ -332,7 +332,7 @@ Configuration changed
 ```console
 Jan 11 08:35:44 pg2 patroni[29170]: 2020-01-11 08:35:44,175 INFO: Changed shared_buffers from 16384 to 256MB (restart required)
 ```
-Необходимость рестарта также наблюдается в состоянии кластера:
+Также необходимость рестарта наблюдается в состоянии кластера:
 ```console
 [root@pg2 ~]# patronictl -c /opt/app/patroni/etc/postgresql.yml list
 +---------+--------+----------------+--------+---------+----+-----------+-----------------+
