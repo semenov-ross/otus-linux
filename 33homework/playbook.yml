@@ -1,0 +1,25 @@
+---
+
+- name: Install and configure Nginx
+  hosts: all
+  become: yes
+  roles:
+    - nginx
+
+- name: Create tomcat sample
+  hosts: all
+  become: yes
+  roles:
+    - tomcat
+
+- name: Create go sample
+  hosts: all
+  become: yes
+  roles:
+    - go
+
+- name: Create ruby sample
+  hosts: all
+  become: yes
+  roles:
+    - ruby

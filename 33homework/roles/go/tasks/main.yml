@@ -1,0 +1,41 @@
+---
+# tasks file for go
+
+- name: Install Golang
+  yum:
+    name: golang
+    state: present
+
+- name: Create goweb directory
+  file: path=/opt/go state=directory mode=0755
+
+- name: Copy main.go
+  copy:
+    src: main.go
+    dest: /opt/go/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Build main.go
+  command: go build -o /opt/go/main /opt/go/main.go
+  args:
+    creates: /opt/go/main
+
+- name: Copy go service unit
+  copy:
+    src: go.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Reload systemd
+  systemd:
+    daemon_reexec: yes
+
+- name: Enable go service
+  systemd:
+    name: go
+    state: started
+    enabled: yes

@@ -1,0 +1,21 @@
+---
+# tasks file for tomcat
+
+- name: Install Tomcat
+  yum:
+    name: tomcat
+    state: present
+
+- name: Copy sample.war
+  copy:
+    src: sample.war
+    dest: /usr/share/tomcat/webapps/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable Tomcat service
+  systemd:
+    name: tomcat
+    state: started
+    enabled: yes

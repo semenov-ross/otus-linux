@@ -1,0 +1,47 @@
+---
+# tasks file for ruby
+
+- name: Install uWSGI, rack plugin, sinatra framework
+  yum:
+    name:
+      - uwsgi
+      - uwsgi-plugin-rack
+      - rubygem-sinatra
+    state: present
+
+- name: Create /opt/ruby directory
+  file:
+    path: /opt/ruby
+    state: directory
+    mode: 0755
+
+- name: Copy config.ru
+  copy:
+    src: config.ru
+    dest: /opt/ruby/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy rubytest.ini
+  copy:
+    src: rubytest.ini
+    dest: /etc/uwsgi.d/
+    owner: uwsgi
+    group: uwsgi
+    mode: 0644
+
+- name: Create /run/uwsgi directory
+  file:
+    path: /run/uwsgi
+    state: directory
+    owner: uwsgi
+    group: uwsgi
+    mode: 0755
+
+- name: Enable uwsgi service
+  systemd:
+    name: uwsgi
+    state: started
+    enabled: yes
+
