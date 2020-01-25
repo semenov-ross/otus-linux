@@ -1,0 +1,14 @@
+---
+
+- name: Install and configure nfs server
+  hosts: server
+  become: yes
+  roles:
+    - nfss
+
+- name: Install and configure nfs client
+  hosts: client
+  become: yes
+  roles:
+    - nfsc
+

@@ -1,0 +1,47 @@
+---
+# tasks file for nfss
+
+- name: Install EPEL Repo package from standard repo
+  yum:
+    name: epel-release
+    state: present
+
+- name: Install nfs-utils package
+  yum:
+    name: nfs-utils
+    state: present
+
+- name: Create nfs export directory
+  file:
+    path: /mnt/nfs/dir1
+    state: directory
+    owner: nfsnobody
+    group: nobody
+    mode: 0755
+
+- name: Copy exports file
+  copy:
+    src: exports
+    dest: /etc/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start nfs-server
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
+
+- name: Add nfs to firewalld rule
+  firewalld: service={{ item }} state=enabled permanent=yes
+  with_items:
+    - nfs3
+    - mountd
+    - rpc-bind
+
+- name: Restart firewalld
+  service:
+    name: firewalld
+    state: restarted
+    enabled: yes

@@ -1,0 +1,38 @@
+---
+# tasks file for nfsc
+
+- name: Install EPEL Repo package from standard repo
+  yum:
+    name: epel-release
+    state: present
+
+- name: Install nfs-utils package
+  yum:
+    name: nfs-utils
+    state: present
+
+- name: Create nfs mount directory
+  file:
+    path: /mnt/nfs/dir1
+    state: directory
+    owner: nfsnobody
+    group: nobody
+    mode: 0755
+
+- name: Enable nfs-client.target
+  systemd:
+    name: nfs-client.target
+    state: restarted
+    enabled: yes
+
+- name: Add nfs directory to fstab
+  lineinfile:
+    path: /etc/fstab
+    #line: "192.168.11.101:/mnt/nfs/dir1 /mnt/nfs/dir1 nfs vers=3,soft,timeo=100,_netdev,rw 0 0"
+    line: "192.168.11.101:/mnt/nfs/dir1 /mnt/nfs/dir1 nfs vers=3,udp,noexec,nosuid 0 0"
+
+- name: Mount all filesystems
+  command: mount -a
+  args:
+    warn: no
+

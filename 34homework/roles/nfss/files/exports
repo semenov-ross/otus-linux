@@ -1,0 +1,1 @@
+/mnt/nfs/dir1  192.168.11.102(rw,sync,root_squash,no_all_squash)
