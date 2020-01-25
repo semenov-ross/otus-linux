@@ -60,7 +60,7 @@ UUID=8ac075e3-1124-4bb6-bef7-a6811bf8b870 /                       xfs     defaul
 /swapfile none swap defaults 0 0
 192.168.11.101:/mnt/nfs/dir1 /mnt/nfs/dir1 nfs vers=3,udp,noexec,nosuid 0 0
 ```
-На client cмотрим список катологов сервера, опции монтирования nfs каталога и информацию о файловых системах:
+На хосте client cмотрим список катологов сервера, опции монтирования nfs каталога и информацию о файловых системах:
 ```console
 [root@client ~]# showmount -e 192.168.11.101
 Export list for 192.168.11.101:
