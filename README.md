@@ -284,8 +284,8 @@ Web сервера.
 Смысл: умные боты попадаются редко, тупые боты по редиректам с куками два раза не пойдут
 
 Для выполнения ДЗ понадобятся
-https://nginx.org/ru/docs/http/ngx_http_rewrite_module.html
-https://nginx.org/ru/docs/http/ngx_http_headers_module.html  
+https://nginx.org/ru/docs/http/ngx_http_rewrite_module.html  
+https://nginx.org/ru/docs/http/ngx_http_headers_module.html    
 ## [27homework](27homework)
 Почта: SMTP, IMAP, POP3.  
 установка почтового сервера
